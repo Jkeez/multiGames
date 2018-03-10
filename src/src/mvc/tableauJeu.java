@@ -27,7 +27,7 @@ import javafx.util.Duration;
  */
 public class tableauJeu extends Observable {
 
-    private boolean[][] mainBoard = new boolean[12][12];
+    private int[][] mainBoard = new int[12][12];
     private Forme pieceCourrante;
 
     public Forme getPieceCourrante() {
@@ -43,16 +43,16 @@ public class tableauJeu extends Observable {
 
     }
 
-    public boolean[][] initializeBoard() {
+    public int[][] initializeBoard() {
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
-                mainBoard[i][j] = false;
+                mainBoard[i][j] = 0;
             }
         }
         return mainBoard;
     }
 
-    public boolean[][] getMainBoard() {
+    public int[][] getMainBoard() {
         return mainBoard;
     }
 
@@ -67,7 +67,7 @@ public class tableauJeu extends Observable {
             colonne = (int) tetro.getPositions().get(i).get(1);
 
             if (caseLibre(ligne, colonne)) {
-                mainBoard[ligne][colonne] = true;
+                mainBoard[ligne][colonne] = tetro.getCouleur();
             } else {
                 return false;
             }
@@ -110,7 +110,7 @@ public class tableauJeu extends Observable {
 
     //verifie si la case cible est libre
     public boolean caseLibre(int ligne, int colonne) {
-        if (mainBoard[ligne][colonne] == true) {
+        if (mainBoard[ligne][colonne] > 0) {
             return false;
         }
         return true;
@@ -140,7 +140,6 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            System.out.println(a);
             if (tableauJeu.isOutOfBound(a, b) == false) {
                 compteur = compteur + 1;
 
@@ -178,7 +177,7 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            mainBoard[ligne][colonne] = false;
+            mainBoard[ligne][colonne] = 0;
 
         }
 
@@ -192,7 +191,7 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            mainBoard[ligne + 1][colonne] = true;
+            mainBoard[ligne + 1][colonne] = tetro.getCouleur();
 
         }
 
@@ -261,7 +260,7 @@ public class tableauJeu extends Observable {
 
             a = ligne;
             b = colonne + 1;
-            mainBoard[ligne][colonne] = false;
+            mainBoard[ligne][colonne] = 0;
 
         }
 
@@ -274,7 +273,7 @@ public class tableauJeu extends Observable {
 
             a = ligne;
             b = colonne + 1;
-            mainBoard[ligne][colonne + 1] = true;
+            mainBoard[ligne][colonne + 1] = tetro.getCouleur();
 
         }
         actualiserUI();
@@ -323,7 +322,7 @@ public class tableauJeu extends Observable {
 
             a = ligne;
             b = colonne - 1;
-            mainBoard[ligne][colonne] = false;
+            mainBoard[ligne][colonne] = 0;
 
         }
 
@@ -336,7 +335,7 @@ public class tableauJeu extends Observable {
 
             a = ligne;
             b = colonne - 1;
-            mainBoard[ligne][colonne - 1] = true;
+            mainBoard[ligne][colonne - 1] = tetro.getCouleur();
 
         }
         actualiserUI();

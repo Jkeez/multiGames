@@ -44,7 +44,7 @@ public class VueControleur extends Application {
 
     tableauJeu tj = new tableauJeu();
 
-    boolean[][] mainBoard = tj.getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
+    int[][] mainBoard = tj.getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
 
 
     @Override
@@ -122,7 +122,7 @@ public class VueControleur extends Application {
     public void initialiserGrille(GridPane gPane) {
         tableauJeu tj = new tableauJeu();
 
-        boolean[][] mainBoard = tj.getMainBoard();
+        int[][] mainBoard = tj.getMainBoard();
         int column = 0, row = 0;
 
         for (int i = 0; i < 12; i++) {
@@ -146,7 +146,7 @@ public class VueControleur extends Application {
     //rempli le gridpane avec le tableau du modele contenant les entiers
     public void afficherGrille(GridPane gPane, tableauJeu tj) {
 
-        boolean[][] mainBoard = tj.getMainBoard();
+        int[][] mainBoard = tj.getMainBoard();
         int column = 0, row = 0;
 
         for (int i = 0; i < 12; i++) {
@@ -156,8 +156,31 @@ public class VueControleur extends Application {
                 r.setFill(Color.WHITE);
                 r.setStroke(Color.BLACK);
 
-                if (mainBoard[i][j] == true) {
-                    r.setFill(Color.BLACK);
+                if (mainBoard[i][j] > 0) {
+                    switch(mainBoard[i][j]){
+                        case 1:
+                            r.setFill(Color.AQUA);
+                            break;
+                        case 2:
+                            r.setFill(Color.YELLOW);
+                            break;
+                        case 3:
+                            r.setFill(Color.VIOLET);
+                            break;
+                        case 4:
+                            r.setFill(Color.BURLYWOOD);
+                            break;
+                        case 5:
+                            r.setFill(Color.BLUE);
+                            break;
+                        case 6:
+                            r.setFill(Color.RED);
+                            break;
+                        case 7:
+                            r.setFill(Color.GREEN);
+                            break;
+                    }
+                    
                 }
                 gPane.add(r, column++, row);
 

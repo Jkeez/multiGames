@@ -20,7 +20,8 @@ public class Forme extends Observable {
 
 
     private boolean Falling;
-    private Color couleur;
+    private int couleur;
+    private Color colorType;
 
     private String shape;
 
@@ -35,7 +36,8 @@ public class Forme extends Observable {
     }
 
     public Forme() {
-        couleur = Color.RED;
+        couleur = genererCouleur();
+        setColorType(couleur);
         setShape();
 
     }
@@ -48,12 +50,54 @@ public class Forme extends Observable {
         this.Falling = isFalling;
     }
 
-    public Color getCouleur() {
+    public int getCouleur() {
         return couleur;
     }
 
-    public void setCouleur(Color couleur) {
+    public void setCouleur(int couleur) {
         this.couleur = couleur;
+    }
+    
+    //la couleur est officiellement liee a la forme, on decide de la rendre aleatoire independament de la forme
+    public int genererCouleur(){
+        Random r = new Random();
+        int Low = 1;
+        int High = 8;
+        int Result = r.nextInt(High-Low) + Low;
+        
+        return Result;
+    }
+    
+    public void setColorType(int couleur){
+        switch(couleur){
+            case 1:
+                this.colorType=Color.AQUA;
+                break;
+            case 2:
+                this.colorType=Color.YELLOW;
+                break;
+            case 3:
+                this.colorType=Color.VIOLET;
+                break;
+            case 4:
+                this.colorType=Color.BURLYWOOD;
+                break;
+            case 5:
+                this.colorType=Color.BLUE;
+                break;
+            case 6:
+                this.colorType=Color.RED;
+                break;
+            case 7:
+                this.colorType=Color.GREEN;
+                break;
+            default:
+                this.colorType=Color.BLACK;
+                break;
+                
+              
+                
+        }
     }
 
     //genere une forme aleatoire
