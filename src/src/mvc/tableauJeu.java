@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+la classe tableauJeu permet la gestion des deplacements des pieces du jeu.
  */
 package src.mvc;
 
@@ -58,27 +56,11 @@ public class tableauJeu extends Observable {
         return mainBoard;
     }
 
-    public Forme popTetrominoes(boolean[][] tj) {
-        //faire fonction randome pour choix tetrominoes
-        Forme f1 = new Forme();
-        f1.setCouleur(Color.RED);
-        //test avec S
-        int ligne, colonne;
-
-        for (int i = 1; i <= 4; i++) {
-            ligne = (int) f1.getPositions().get(i).get(0);
-            colonne = (int) f1.getPositions().get(i).get(1);
-            tj[ligne][colonne] = true;//faire verif avant ajout (libre ou pas)
-
-        }
-
-        return f1;//renvoi la forme afin de l'ajouter en dur au jeu
-
-    }
-
+    //ajoute au modele les positions de la piece que l'on souhaite ajouter, renvoie false si l'ajout est impossible.
     public boolean ajouterPiece(Forme tetro) throws InterruptedException {
         int ligne, colonne;
 
+        //parcours chaque case de la piece pour recuperer sa ligne et sa colonne
         for (int i = 1; i <= 4; i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
@@ -95,6 +77,7 @@ public class tableauJeu extends Observable {
         return true;
     }
 
+    //fonction qui declenche l'observer afin de mettre a jour l'UI
     public void actualiserUI() {
         Platform.runLater(new Runnable() {
             @Override
@@ -106,6 +89,7 @@ public class tableauJeu extends Observable {
 
     }
 
+    //permet d'arreter le thread en cours
     public void pauseUneSeconde() throws InterruptedException {
         Thread one = new Thread() {
             public void run() {
@@ -124,6 +108,7 @@ public class tableauJeu extends Observable {
 
     }
 
+    //verifie si la case cible est libre
     public boolean caseLibre(int ligne, int colonne) {
         if (mainBoard[ligne][colonne] == true) {
             return false;
@@ -131,6 +116,7 @@ public class tableauJeu extends Observable {
         return true;
     }
 
+    //verifie que la case cible n'est pas hors du tableau
     public static boolean isOutOfBound(int a, int b) {
         if (a >= 12 || b >= 12 || a < 0 || b < 0) {
             return true;
@@ -139,6 +125,7 @@ public class tableauJeu extends Observable {
 
     }
 
+    //verifie pour chaque case que le mouvement vers le bas est autorise, ajoute une nouvelle piece sinon
     public void faireTomberPiece(Forme tetro, Timer time) throws InterruptedException {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
@@ -181,6 +168,7 @@ public class tableauJeu extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
+        //efface la forme du tableau afin d'eviter les chevauchements de cases de la meme piece
         for (int i = 1; i <= 4; i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
@@ -194,6 +182,7 @@ public class tableauJeu extends Observable {
 
         }
 
+        //ajoute la forme a la ligne suivante
         for (int i = 1; i <= 4; i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
@@ -209,6 +198,7 @@ public class tableauJeu extends Observable {
 
     }
 
+    //lance un timer pour faire descendre la piece courrante d une case chaque seconde
     public void mouvementBasAuto(Forme tetro) {
         Timer time = new Timer();
         time.schedule(
@@ -228,6 +218,7 @@ public class tableauJeu extends Observable {
 
     }
 
+    //verifie que le mouvement vers la droite est autorise
     public void verificationMouvementDroit(Forme tetro) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
@@ -255,6 +246,7 @@ public class tableauJeu extends Observable {
         }
     }
 
+    //deplacement vers la droite de la piece
     public void mouvementDroit(Forme tetro) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
@@ -288,6 +280,7 @@ public class tableauJeu extends Observable {
         actualiserUI();
     }
 
+    //verifie que le mouvement vers la gauche est autorise
     public void verificationMouvementGauche(Forme tetro) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
@@ -315,6 +308,7 @@ public class tableauJeu extends Observable {
         }
     }
 
+    //deplacement vers la gauche
     public void mouvementGauche(Forme tetro) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;

@@ -39,28 +39,17 @@ import javafx.util.Duration;
 import src.mvc.Forme;
 import src.mvc.tableauJeu;
 
-/**
- *
- * @author freder
- */
-public class VueControleur extends Application {
 
-    // modèle : ce qui réalise le calcule de l'expression
-    Modele m;
-    // affiche la saisie et le résultat
-    Text affichage;
+public class VueControleur extends Application {
 
     tableauJeu tj = new tableauJeu();
 
-    boolean[][] mainBoard = tj.getMainBoard();
+    boolean[][] mainBoard = tj.getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
 
-    Timer chrono = new Timer("1000");
 
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
 
-        // initialisation du modèle que l'on souhaite utiliser
-        m = new Modele();
 
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
         BorderPane border = new BorderPane();
@@ -71,11 +60,8 @@ public class VueControleur extends Application {
         int column = 0;
         int row = 0;
 
-        affichage = new Text("");
-        affichage.setFont(Font.font("Verdana", 20));
-        affichage.setFill(Color.RED);
-        border.setTop(affichage);
 
+        //observer appele afin de mettre a jour la vue (gridPane)
         tj.addObserver(new Observer() {
 
             @Override
@@ -85,74 +71,6 @@ public class VueControleur extends Application {
             }
         });
 
-        // on efface affichage lors du clic
-        affichage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                affichage.setText("");
-            }
-
-        });
-
-        /*
-        // création des bouton et placement dans la grille
-        for (int i=0;i<12;i++) {
-            for(int j=0;j<12;j++){
-                
-                final Text t = new Text("");
-                t.setWrappingWidth(30);
-                t.setTextAlignment(TextAlignment.CENTER);
-                Rectangle r=new Rectangle(20,20,20,20);
-              
-                r.setFill(Color.WHITE);
-                
-                
-                    
-                r.setStroke(Color.BLACK);
-
-                
-                gPane.add(r, column++, row);
-
-                if (column > 11) {
-                    column = 0;
-                    row++;
-                }
-
-                // un controleur (EventHandler) par bouton écoute et met à jour le champ affichage
-                t.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-                    @Override
-                    public void handle(MouseEvent event) {
-                        affichage.setText(affichage.getText() + t.getText());
-                    }
-
-                });
-
-            
-            
-        }
-        }
-        
-      
-        
-    
-        final Text t = new Text("");
-        t.setWrappingWidth(30);
-      
-        //gPane.add(t, column++, row);
-        t.setTextAlignment(TextAlignment.CENTER);
-        //t.setEffect(new Shadow());
-        
-        // un controleur écoute le bouton "=" et déclenche l'appel du modèle
-        t.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            
-            @Override
-            public void handle(MouseEvent event) {
-                m.calc(affichage.getText());
-            }
-        });
-         */
         gPane.setGridLinesVisible(true);
 
         border.setCenter(gPane);
@@ -163,8 +81,12 @@ public class VueControleur extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
+        
+        
         Forme tetroCourrant = new Forme();
         tj.setPieceCourrante(tetroCourrant);
+        
+        //ajoute un evenement a capturer sur la scene, capture les saisies claviers
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             @Override
@@ -183,7 +105,7 @@ public class VueControleur extends Application {
         if (tj.ajouterPiece(tj.getPieceCourrante()) == true) {
             afficherGrille(gPane, tj);
 
-            tj.mouvementBasAuto(tj.getPieceCourrante());
+            tj.mouvementBasAuto(tj.getPieceCourrante());//fait tomber la piece
 
         } else {
             System.out.println("Fin de partie");
@@ -196,6 +118,7 @@ public class VueControleur extends Application {
         //faireTomberPiece(tetro, gPane);
     }
 
+    //initialise un gridpane vide
     public void initialiserGrille(GridPane gPane) {
         tableauJeu tj = new tableauJeu();
 
@@ -220,6 +143,7 @@ public class VueControleur extends Application {
         }
     }
 
+    //rempli le gridpane avec le tableau du modele contenant les entiers
     public void afficherGrille(GridPane gPane, tableauJeu tj) {
 
         boolean[][] mainBoard = tj.getMainBoard();
@@ -246,102 +170,6 @@ public class VueControleur extends Application {
         }
     }
 
-    public void ajouterTetrominosJeu(Forme tetro, GridPane gPane) throws InterruptedException {
-
-        //test avec S
-        int ligne, colonne;
-
-        for (int i = 1; i <= 4; i++) {
-            Rectangle rect = new Rectangle(20, 20, 20, 20);
-            rect.setFill(tetro.getCouleur());
-            rect.setStroke(Color.BLACK);
-
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-
-            gPane.add(rect, colonne, ligne);
-
-        }
-
-    }
-
-    public void faireTomberPiece(Forme tetro, GridPane gPane) {
-
-        int ligne = 0, colonne = 0;
-        int a = 0, b = 0;
-
-        do {
-
-            for (int i = 1; i <= 4; i++) {
-                Rectangle rect = new Rectangle(20, 20, 20, 20);
-                Rectangle rectVide = new Rectangle(20, 20, 20, 20);
-
-                rect.setStroke(Color.BLACK);
-                rectVide.setStroke(Color.BLACK);
-
-                ligne = (int) tetro.getPositions().get(i).get(0);
-                colonne = (int) tetro.getPositions().get(i).get(1);
-                tetro.getPositions().get(i).add(0, ligne + 1);
-                tetro.getPositions().get(i).add(1, colonne);
-
-                a = ligne;
-                b = colonne;
-
-                if (tableauJeu.isOutOfBound(a, b) != true) {
-                    rectVide.setFill(Color.WHITE);
-                    if (a != 0) {
-                        //Node n=getNodeByRowColumnIndex(a-1,b,gPane); 
-                        //gPane.getChildren().remove(n);
-                        if (i != 3) {
-                            gPane.add(rectVide, colonne, ligne - 1);
-                        }
-                        rect.setFill(tetro.getCouleur());
-                        gPane.add(rect, colonne, ligne);
-                    } else {
-                        //Rectangle n=(Rectangle)getNodeByRowColumnIndex(a,b,gPane);
-                        //gPane.getChildren().remove(n);
-                        gPane.add(rectVide, colonne, ligne);
-                        rect.setFill(tetro.getCouleur());
-                        gPane.add(rect, colonne, ligne + 1);
-                    }
-
-                } else {
-                    System.out.println("OutOfBound");
-                }
-
-            }
-
-            a = ligne + 1;
-            b = colonne;
-        } while (tableauJeu.isOutOfBound(a, b) != true);
-
-    }
-
-    private Node getNodeByRowColumnIndex(int row, int column,
-            GridPane gridPane) {
-        Node result = null;
-        ObservableList<Node> childrens = gridPane.getChildren();
-        for (Node node : childrens) {
-            if (gridPane.getRowIndex(node) == row
-                    && gridPane.getColumnIndex(node) == column) {
-                result = node;
-                break;
-            }
-        }
-        return result;
-    }
-
-    /*
-    
-    private Forme getTetrominos(GridPane gridPane, int col, int row) {
-    for (Node node : gridPane.getChildren()) {
-        if (gridPane.getColumnIndex(node) == col && gridPane.getRowIndex(node) == row) {
-            return (Forme)node;
-        }
-    }
-    return null;
-}
-     */
     /**
      * @param args the command line arguments
      */

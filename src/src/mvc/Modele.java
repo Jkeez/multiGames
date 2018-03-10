@@ -8,19 +8,11 @@ package mvc;
 import java.util.Observable;
 import mvc.libInterpreteurExpr.Node;
 
-/**
- *
- * @author fred
- */
 public class Modele extends Observable {
 
     double lastValue;
     boolean err = false;
 
-    public void testGrille() {
-        setChanged();
-        notifyObservers();
-    }
 
     public void calc(String expr) {
         StringBuffer input;
