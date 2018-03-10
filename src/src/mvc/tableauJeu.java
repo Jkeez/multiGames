@@ -131,6 +131,22 @@ public class tableauJeu extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
+        
+        
+        for (int i = 1; i <= 4; i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne + 1;
+            b = colonne;
+            mainBoard[ligne][colonne]=0;
+           
+
+        }
+        
         for (int i = 1; i <= 4; i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
@@ -141,8 +157,11 @@ public class tableauJeu extends Observable {
             a = ligne + 1;
             b = colonne;
             if (tableauJeu.isOutOfBound(a, b) == false) {
-                compteur = compteur + 1;
-
+                if(caseLibre(a,b)==true){
+                    compteur = compteur + 1;
+                }
+                
+                
             }
 
         }
@@ -150,6 +169,19 @@ public class tableauJeu extends Observable {
         if (compteur == 4) {
             descendrePiece(tetro);
         } else {
+            for (int i = 1; i <= 4; i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne + 1;
+            b = colonne;
+            mainBoard[ligne][colonne]=tetro.getCouleur();
+           
+
+        }
             time.cancel();
             Forme newF = new Forme();
             this.ajouterPiece(newF);
@@ -222,6 +254,20 @@ public class tableauJeu extends Observable {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
         int compteur = 0;
+        
+        for (int i = 1; i <= 4; i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne;
+            b = colonne+1;
+            mainBoard[ligne][colonne]=0;
+           
+
+        }
 
         for (int i = 1; i <= 4; i++) {
 
@@ -234,7 +280,10 @@ public class tableauJeu extends Observable {
             b = colonne;
 
             if (tableauJeu.isOutOfBound(a, b + 1) != true) {
-                compteur = compteur + 1;
+                if(caseLibre(a,b+1)==true){
+                    compteur = compteur + 1;
+                }
+                
 
             }
 
@@ -242,6 +291,21 @@ public class tableauJeu extends Observable {
 
         if (compteur == 4) {
             mouvementDroit(tetro);
+        }
+        else{
+            for (int i = 1; i <= 4; i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne;
+            b = colonne+1;
+            mainBoard[ligne][colonne]=tetro.getCouleur();
+           
+
+        }
         }
     }
 
@@ -284,6 +348,21 @@ public class tableauJeu extends Observable {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
         int compteur = 0;
+        
+        for (int i = 1; i <= 4; i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne;
+            b = colonne-1;
+            mainBoard[ligne][colonne]=0;
+           
+
+        }
+        
 
         for (int i = 1; i <= 4; i++) {
 
@@ -296,7 +375,9 @@ public class tableauJeu extends Observable {
             b = colonne;
 
             if (tableauJeu.isOutOfBound(a, b - 1) != true) {
-                compteur = compteur + 1;
+                if(caseLibre(a,b-1)==true){
+                    compteur = compteur + 1;
+                }
 
             }
 
@@ -304,6 +385,21 @@ public class tableauJeu extends Observable {
 
         if (compteur == 4) {
             mouvementGauche(tetro);
+        }
+        else{
+            for (int i = 1; i <= 4; i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne;
+            b = colonne;
+            mainBoard[ligne][colonne]=tetro.getCouleur();
+           
+
+        }
         }
     }
 
