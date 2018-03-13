@@ -22,9 +22,10 @@ import src.mvc.tableauJeu;
  */
 
 
-public class vueGenerique extends BorderPane implements Observer {
+public class vueGenerique extends BorderPane {
     
 	modeleGenerique bibliotheque;
+        GridPane gPane;
 
     public modeleGenerique getBibliotheque() {
         return bibliotheque;
@@ -36,12 +37,33 @@ public class vueGenerique extends BorderPane implements Observer {
     public vueGenerique(){
         super();
         
+        this.bibliotheque=new modeleGenerique();
+        
+    }
+
+    public GridPane getgPane() {
+        return gPane;
+    }
+
+    public void setgPane(GridPane gPane) {
+        this.gPane = gPane;
     }
     
+    
+    public static void ajouterObserver(vueGenerique vueG){
+        vueG.getBibliotheque().addObserver(new Observer() {
+
+            @Override
+            public void update(Observable o, Object arg) {
+                vueG.initialiserGrille();
+                vueG.afficherGrille(vueG.gPane, vueG.getBibliotheque());
+            }
+        });
+    }
    
     //initialise un gridpane vide
-    public void initialiserGrille(GridPane gPane) {
-        tableauJeu tj = new tableauJeu();
+    public void initialiserGrille() {
+        modeleGenerique tj = new modeleGenerique();
 
         int[][] mainBoard = tj.getMainBoard();
         int column = 0, row = 0;
@@ -65,7 +87,7 @@ public class vueGenerique extends BorderPane implements Observer {
     }
 
     //rempli le gridpane avec le tableau du modele contenant les entiers
-    public void afficherGrille(GridPane gPane, tableauJeu tj) {
+    public void afficherGrille(GridPane gPane, modeleGenerique tj) {
 
         int[][] mainBoard = tj.getMainBoard();
         int column = 0, row = 0;
@@ -112,6 +134,7 @@ public class vueGenerique extends BorderPane implements Observer {
 
             }
         }
+}
 }
 
     

@@ -13,6 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import generique.vueGenerique;
+import static generique.vueGenerique.ajouterObserver;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -20,6 +21,7 @@ import javafx.collections.ObservableList;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.DropShadow;
@@ -50,7 +52,7 @@ public class VueControleur extends Application {
     
     tableauJeu tj = new tableauJeu();
 
-    int[][] mainBoard = vueG.getBibliotheque().getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
+    //int[][] mainBoard = vueG.getBibliotheque().getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
 
 
     @Override
@@ -58,39 +60,33 @@ public class VueControleur extends Application {
     	
 
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
-        BorderPane border = new BorderPane();
-
+       
+       
         // permet de placer les diffrents boutons dans une grille
-        GridPane gPane = new GridPane();
 
         int column = 0;
         int row = 0;
+        GridPane gpane=new GridPane();
 
+        vueG.setgPane(gpane);
+        vueG.setCenter(vueG.getgPane());
+        vueG.getgPane().setGridLinesVisible(true);
+        ajouterObserver(vueG);
+        vueG.setPrefSize(600,400);
+        vueG.setStyle("-fx-border-color: black;");
+        Parent border = null;
 
-        //observer appele afin de mettre a jour la vue (gridPane)
-        vueG.getBibliotheque().addObserver(new Observer() {
-
-            @Override
-            public void update(Observable o, Object arg) {
-                vueG.initialiserGrille(gPane);
-                vueG.afficherGrille(gPane, tj);
-            }
-        });
-
-        gPane.setGridLinesVisible(true);
-
-        border.setCenter(gPane);
-
-        Scene scene = new Scene(border, Color.LIGHTBLUE);
+        vueG.initialiserGrille();
+        Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
 
         primaryStage.setTitle("MultiGames");
         primaryStage.setScene(scene);
 
         primaryStage.show();
-        
-        
+       
+      
         Forme tetroCourrant = new Forme();
-        tj.setPieceCourrante(tetroCourrant);
+        vueG.getBibliotheque().setPieceCourrante(tetroCourrant);
         
         
         
@@ -100,20 +96,20 @@ public class VueControleur extends Application {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.RIGHT) {
-                    tj.verificationMouvementDroit(tj.getPieceCourrante());
+                    vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante());
                 }
                 if (event.getCode() == KeyCode.LEFT) {
-                    tj.verificationMouvementGauche(tj.getPieceCourrante());
+                    vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante());
                 }
             }
         });
 
-        initialiserGrille(gPane);
+        
 
-        if (tj.ajouterPiece(tj.getPieceCourrante()) == true) {
-            afficherGrille(gPane, tj);
+        if (vueG.getBibliotheque().ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
+            vueG.afficherGrille(vueG.getgPane(), vueG.getBibliotheque());
 
-            tj.mouvementBasAuto(tj.getPieceCourrante());//fait tomber la piece
+            vueG.getBibliotheque().mouvementBasAuto(vueG.getBibliotheque().getPieceCourrante());//fait tomber la piece
 
         } else {
             System.out.println("Fin de partie");
