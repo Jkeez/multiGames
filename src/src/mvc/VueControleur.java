@@ -6,11 +6,13 @@
  */
 package mvc;
 
-import generique.vueGenerique;
-import static java.lang.Thread.sleep;
+
+
+
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Timer;
+
+import generique.vueGenerique;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -43,16 +45,17 @@ import src.mvc.tableauJeu;
 
 public class VueControleur extends Application {
 
-    vueGenerique vueG=new vueGenerique();
-    vueG.getBibliotheque();
+    vueGenerique vueG = new vueGenerique();
+    
+    
     tableauJeu tj = new tableauJeu();
 
-    int[][] mainBoard = tj.getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
+    int[][] mainBoard = vueG.getBibliotheque().getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
 
 
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
-
+    	
 
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
         BorderPane border = new BorderPane();
@@ -65,12 +68,12 @@ public class VueControleur extends Application {
 
 
         //observer appele afin de mettre a jour la vue (gridPane)
-        tj.addObserver(new Observer() {
+        vueG.getBibliotheque().addObserver(new Observer() {
 
             @Override
             public void update(Observable o, Object arg) {
-                initialiserGrille(gPane);
-                afficherGrille(gPane, tj);
+                vueG.initialiserGrille(gPane);
+                vueG.afficherGrille(gPane, tj);
             }
         });
 
@@ -88,6 +91,8 @@ public class VueControleur extends Application {
         
         Forme tetroCourrant = new Forme();
         tj.setPieceCourrante(tetroCourrant);
+        
+        
         
         //ajoute un evenement a capturer sur la scene, capture les saisies claviers
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -121,85 +126,14 @@ public class VueControleur extends Application {
         //faireTomberPiece(tetro, gPane);
     }
 
-    //initialise un gridpane vide
-    public void initialiserGrille(GridPane gPane) {
-        tableauJeu tj = new tableauJeu();
 
-        int[][] mainBoard = tj.getMainBoard();
-        int column = 0, row = 0;
-
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 12; j++) {
-                Rectangle r = new Rectangle(20, 20, 20, 20);
-
-                r.setFill(Color.WHITE);
-                r.setStroke(Color.BLACK);
-
-                gPane.add(r, column++, row);
-
-                if (column > 11) {
-                    column = 0;
-                    row++;
-                }
-
-            }
-        }
-    }
-
-    //rempli le gridpane avec le tableau du modele contenant les entiers
-    public void afficherGrille(GridPane gPane, tableauJeu tj) {
-
-        int[][] mainBoard = tj.getMainBoard();
-        int column = 0, row = 0;
-
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 12; j++) {
-                Rectangle r = new Rectangle(20, 20, 20, 20);
-
-                r.setFill(Color.WHITE);
-                r.setStroke(Color.BLACK);
-
-                if (mainBoard[i][j] > 0) {
-                    switch(mainBoard[i][j]){
-                        case 1:
-                            r.setFill(Color.AQUA);
-                            break;
-                        case 2:
-                            r.setFill(Color.YELLOW);
-                            break;
-                        case 3:
-                            r.setFill(Color.VIOLET);
-                            break;
-                        case 4:
-                            r.setFill(Color.BURLYWOOD);
-                            break;
-                        case 5:
-                            r.setFill(Color.BLUE);
-                            break;
-                        case 6:
-                            r.setFill(Color.RED);
-                            break;
-                        case 7:
-                            r.setFill(Color.GREEN);
-                            break;
-                    }
-                    
-                }
-                gPane.add(r, column++, row);
-
-                if (column > 11) {
-                    column = 0;
-                    row++;
-                }
-
-            }
-        }
-    }
+    
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+    	
         launch(args);
     }
 

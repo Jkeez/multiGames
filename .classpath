@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="src/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/src"/>
+	<classpathentry kind="lib" path="dist/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run1029837489/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run1214412390/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run1451489225/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run1691483121/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run1939982936/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run1981835646/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run2020737161/MultiGames.jar"/>
+	<classpathentry kind="lib" path="dist/run2054657848/MultiGames.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

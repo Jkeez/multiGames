@@ -8,6 +8,7 @@ package generique;
 
 
 import static java.lang.Thread.sleep;
+
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
