@@ -6,6 +6,7 @@
  */
 package mvc;
 
+import generique.vueGenerique;
 import static java.lang.Thread.sleep;
 import java.util.Observable;
 import java.util.Observer;
@@ -42,6 +43,8 @@ import src.mvc.tableauJeu;
 
 public class VueControleur extends Application {
 
+    vueGenerique vueG=new vueGenerique();
+    vueG.getBibliotheque();
     tableauJeu tj = new tableauJeu();
 
     int[][] mainBoard = tj.getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
