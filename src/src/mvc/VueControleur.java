@@ -52,7 +52,7 @@ public class VueControleur extends Application {
     
     tableauJeu tj = new tableauJeu();
 
-    //int[][] mainBoard = vueG.getBibliotheque().getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
+    int[][] mainBoard = vueG.getBibliotheque().getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
 
 
     @Override
@@ -106,10 +106,10 @@ public class VueControleur extends Application {
 
         
 
-        if (vueG.getBibliotheque().ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
+        if (tj.ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
             vueG.afficherGrille(vueG.getgPane(), vueG.getBibliotheque());
 
-            vueG.getBibliotheque().mouvementBasAuto(vueG.getBibliotheque().getPieceCourrante());//fait tomber la piece
+            tj.mouvementBasAuto(vueG.getBibliotheque().getPieceCourrante(),vueG);//fait tomber la piece
 
         } else {
             System.out.println("Fin de partie");

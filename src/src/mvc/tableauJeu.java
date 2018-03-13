@@ -3,6 +3,8 @@ la classe tableauJeu permet la gestion des deplacements des pieces du jeu.
  */
 package src.mvc;
 
+import generique.modeleGenerique;
+import generique.vueGenerique;
 import static java.lang.Thread.sleep;
 import java.util.Observable;
 import java.util.Observer;
@@ -126,7 +128,7 @@ public class tableauJeu extends Observable {
     }
 
     //verifie pour chaque case que le mouvement vers le bas est autorise, ajoute une nouvelle piece sinon
-    public void faireTomberPiece(Forme tetro, Timer time) throws InterruptedException {
+    public void faireTomberPiece(Forme tetro, Timer time, vueGenerique vueG) throws InterruptedException {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
         int compteur = 0;
@@ -142,7 +144,7 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            mainBoard[ligne][colonne]=0;
+            vueG.getBibliotheque().getMainBoard()[ligne][colonne]=0;
            
 
         }
@@ -156,8 +158,8 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            if (tableauJeu.isOutOfBound(a, b) == false) {
-                if(caseLibre(a,b)==true){
+            if (modeleGenerique.isOutOfBound(a, b) == false) {
+                if(vueG.getBibliotheque().caseLibre(a,b)==true){
                     compteur = compteur + 1;
                 }
                 
@@ -167,7 +169,7 @@ public class tableauJeu extends Observable {
         }
 
         if (compteur == 4) {
-            descendrePiece(tetro);
+            descendrePiece(tetro,vueG);
         } else {
             for (int i = 1; i <= 4; i++) {
 
@@ -178,22 +180,22 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            mainBoard[ligne][colonne]=tetro.getCouleur();
+            vueG.getBibliotheque().getMainBoard()[ligne][colonne]=tetro.getCouleur();
            
 
         }
             time.cancel();
             Forme newF = new Forme();
-            this.ajouterPiece(newF);
-            actualiserUI();
-            this.setPieceCourrante(newF);
-            this.mouvementBasAuto(newF);
+            vueG.getBibliotheque().ajouterPiece(newF);
+            vueG.getBibliotheque().actualiserUI();
+            vueG.getBibliotheque().setPieceCourrante(newF);
+            this.mouvementBasAuto(newF,vueG);
 
         }
     }
 
     //fait tomber une forme de une case
-    public void descendrePiece(Forme tetro) throws InterruptedException {
+    public void descendrePiece(Forme tetro, vueGenerique vueG) throws InterruptedException {
 
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
@@ -209,7 +211,7 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            mainBoard[ligne][colonne] = 0;
+            vueG.getBibliotheque().getMainBoard()[ligne][colonne]=0;
 
         }
 
@@ -223,14 +225,14 @@ public class tableauJeu extends Observable {
 
             a = ligne + 1;
             b = colonne;
-            mainBoard[ligne + 1][colonne] = tetro.getCouleur();
+            vueG.getBibliotheque().getMainBoard()[ligne + 1][colonne] = tetro.getCouleur();
 
         }
 
     }
 
     //lance un timer pour faire descendre la piece courrante d une case chaque seconde
-    public void mouvementBasAuto(Forme tetro) {
+    public void mouvementBasAuto(Forme tetro,vueGenerique vueG) {
         Timer time = new Timer();
         time.schedule(
                 new TimerTask() {
@@ -238,9 +240,9 @@ public class tableauJeu extends Observable {
             @Override
             public void run() {
                 try {
-                    actualiserUI();
-                    faireTomberPiece(tetro, time);
-                    actualiserUI();
+                    vueG.getBibliotheque().actualiserUI();
+                    faireTomberPiece(tetro, time,vueG);
+                    vueG.getBibliotheque().actualiserUI();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(tableauJeu.class.getName()).log(Level.SEVERE, null, ex);
                 }
