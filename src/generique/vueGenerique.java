@@ -37,6 +37,7 @@ public class vueGenerique extends BorderPane {
     public vueGenerique(){
         super();  
         this.bibliotheque=new modeleGenerique();
+        
     }
 
     public GridPane getgPane() {

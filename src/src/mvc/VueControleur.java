@@ -14,15 +14,23 @@ import java.util.Observer;
 
 import generique.vueGenerique;
 import static generique.vueGenerique.ajouterObserver;
+import java.awt.Button;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
@@ -59,18 +67,32 @@ public class VueControleur extends Application {
     public void start(Stage primaryStage) throws InterruptedException {
     	
 
-        // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
-       
-       
-        // permet de placer les diffrents boutons dans une grille
-
+        
+        List<String> choices = new ArrayList<>();
+        
+        choices.add("Tetris");
+        choices.add("Rush Hour");
+        
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("--Liste de Jeux--", choices);
+        dialog.setTitle("Choisir un jeu");
+        dialog.setContentText("Jeu :");
+        
+        Optional<String> result = dialog.showAndWait();
+        
+        if(result.isPresent()){
+            System.out.println("choix :"+result.get());
+            
+        
         int column = 0;
         int row = 0;
         GridPane gpane=new GridPane();
-
+       
+        
         vueG.setgPane(gpane);
         vueG.setCenter(vueG.getgPane());
         vueG.getgPane().setGridLinesVisible(true);
+        
+        
         ajouterObserver(vueG);
         vueG.setPrefSize(600,400);
         vueG.setStyle("-fx-border-color: black;");
@@ -79,6 +101,7 @@ public class VueControleur extends Application {
         vueG.initialiserGrille();
         Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
 
+        
         primaryStage.setTitle("MultiGames");
         primaryStage.setScene(scene);
 
@@ -120,6 +143,75 @@ public class VueControleur extends Application {
 
         //ajouterTetrominosJeu(tetro, gPane);
         //faireTomberPiece(tetro, gPane);
+         
+        }
+        // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
+       
+       
+        // permet de placer les diffrents boutons dans une grille
+/*
+        
+        int column = 0;
+        int row = 0;
+        GridPane gpane=new GridPane();
+       
+        
+        vueG.setgPane(gpane);
+        vueG.setCenter(vueG.getgPane());
+        vueG.getgPane().setGridLinesVisible(true);
+        
+        
+        ajouterObserver(vueG);
+        vueG.setPrefSize(600,400);
+        vueG.setStyle("-fx-border-color: black;");
+        Parent border = null;
+
+        vueG.initialiserGrille();
+        Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
+
+        
+        primaryStage.setTitle("MultiGames");
+        primaryStage.setScene(scene);
+
+        primaryStage.show();
+       
+      
+        Forme tetroCourrant = new Forme();
+        vueG.getBibliotheque().setPieceCourrante(tetroCourrant);
+        
+        
+        
+        //ajoute un evenement a capturer sur la scene, capture les saisies claviers
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.RIGHT) {
+                    vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante());
+                }
+                if (event.getCode() == KeyCode.LEFT) {
+                    vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante());
+                }
+            }
+        });
+
+        
+
+        if (tj.ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
+            vueG.afficherGrille(vueG.getgPane(), vueG.getBibliotheque());
+
+            tj.mouvementBasAuto(vueG.getBibliotheque().getPieceCourrante(),vueG);//fait tomber la piece
+
+        } else {
+            System.out.println("Fin de partie");
+        }
+        //Forme tetro = new Forme();
+        //m.testGrille();
+        //tetro=tj.popTetrominoes( mainBoard);//ajoute tetrominos au jeu + recupere forme
+
+        //ajouterTetrominosJeu(tetro, gPane);
+        //faireTomberPiece(tetro, gPane);
+        */
     }
 
 
