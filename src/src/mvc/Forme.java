@@ -38,7 +38,7 @@ public class Forme extends Observable {
     public Forme() {
         couleur = genererCouleur();
         setColorType(couleur);
-        setShape();
+        
 
     }
 
@@ -130,6 +130,92 @@ public class Forme extends Observable {
         this.positions.put(4, p4);
 
         this.shape = "s";
+
+    }
+    
+      //genere un camion pour le rushHour ,case initiale a (x,y), orientation designera DROIT si 1 BAS sinon
+    public void objetCamion(int x,int y, int orientation) {
+
+       if(orientation==1){
+           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
+        p1.add(x);//ligne (index 0)
+        p1.add(y);//colonne (index 1)
+
+        this.positions.put(1, p1);//insere les coordonnees dans la map
+
+        //idem pour les autres cases
+        ArrayList<Integer> p2 = new ArrayList<Integer>();
+        p2.add(x);
+        p2.add(y+1);
+
+        this.positions.put(2, p2);
+
+        ArrayList<Integer> p3 = new ArrayList<Integer>();
+        p3.add(x);
+        p3.add(y+2);
+
+        this.positions.put(3, p3);
+
+        ArrayList<Integer> p4 = new ArrayList<Integer>();
+        p4.add(x);
+        p4.add(y+3);
+
+        this.positions.put(4, p4);
+        
+        ArrayList<Integer> p5 = new ArrayList<Integer>();
+        p5.add(x);
+        p5.add(y+4);
+
+        this.positions.put(5, p5);
+        
+        ArrayList<Integer> p6 = new ArrayList<Integer>();
+        p6.add(x);
+        p6.add(y+5);
+
+        this.positions.put(6, p6);
+
+        this.shape = "camion";
+       }else{
+           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
+        p1.add(x);//ligne (index 0)
+        p1.add(y);//colonne (index 1)
+
+        this.positions.put(1, p1);//insere les coordonnees dans la map
+
+        //idem pour les autres cases
+        ArrayList<Integer> p2 = new ArrayList<Integer>();
+        p2.add(x+1);
+        p2.add(y);
+
+        this.positions.put(2, p2);
+
+        ArrayList<Integer> p3 = new ArrayList<Integer>();
+        p3.add(x+2);
+        p3.add(y);
+
+        this.positions.put(3, p3);
+
+        ArrayList<Integer> p4 = new ArrayList<Integer>();
+        p4.add(x+3);
+        p4.add(y);
+
+        this.positions.put(4, p4);
+        
+        ArrayList<Integer> p5 = new ArrayList<Integer>();
+        p5.add(x+4);
+        p5.add(y);
+
+        this.positions.put(5, p5);
+        
+        ArrayList<Integer> p6 = new ArrayList<Integer>();
+        p6.add(x+5);
+        p6.add(y);
+
+        this.positions.put(6, p6);
+
+        this.shape = "camion";
+       }
+        
 
     }
 

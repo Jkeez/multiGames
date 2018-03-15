@@ -104,6 +104,7 @@ public class tableauJeu extends Observable {
         }
             time.cancel();
             Forme newF = new Forme();
+            newF.setShape();
             vueG.getBibliotheque().ajouterPiece(newF);
             vueG.getBibliotheque().actualiserUI();
             vueG.getBibliotheque().setPieceCourrante(newF);
