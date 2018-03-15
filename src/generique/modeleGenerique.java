@@ -131,129 +131,6 @@ public class modeleGenerique extends Observable {
 
     }
 
-    //verifie pour chaque case que le mouvement vers le bas est autorise, ajoute une nouvelle piece sinon
-    public void faireTomberPiece(Forme tetro, Timer time) throws InterruptedException {
-        int ligne = 0, colonne = 0;
-        int a = 0, b = 0;
-        int compteur = 0;
-
-        
-        
-        for (int i = 1; i <= 4; i++) {
-
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
-
-            a = ligne + 1;
-            b = colonne;
-            mainBoard[ligne][colonne]=0;
-           
-
-        }
-        
-        for (int i = 1; i <= 4; i++) {
-
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
-
-            a = ligne + 1;
-            b = colonne;
-            if (modeleGenerique.isOutOfBound(a, b) == false) {
-                if(caseLibre(a,b)==true){
-                    compteur = compteur + 1;
-                }
-                
-                
-            }
-
-        }
-
-        if (compteur == 4) {
-            descendrePiece(tetro);
-        } else {
-            for (int i = 1; i <= 4; i++) {
-
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
-
-            a = ligne + 1;
-            b = colonne;
-            mainBoard[ligne][colonne]=tetro.getCouleur();
-           
-
-        }
-            time.cancel();
-            Forme newF = new Forme();
-            this.ajouterPiece(newF);
-            actualiserUI();
-            this.setPieceCourrante(newF);
-            this.mouvementBasAuto(newF);
-
-        }
-    }
-
-    //fait tomber une forme de une case
-    public void descendrePiece(Forme tetro) throws InterruptedException {
-
-        int ligne = 0, colonne = 0;
-        int a = 0, b = 0;
-        int compteur = 0;
-
-        //efface la forme du tableau afin d'eviter les chevauchements de cases de la meme piece
-        for (int i = 1; i <= 4; i++) {
-
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
-
-            a = ligne + 1;
-            b = colonne;
-            mainBoard[ligne][colonne] = 0;
-
-        }
-
-        //ajoute la forme a la ligne suivante
-        for (int i = 1; i <= 4; i++) {
-
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne + 1);
-            tetro.getPositions().get(i).add(1, colonne);
-
-            a = ligne + 1;
-            b = colonne;
-            mainBoard[ligne + 1][colonne] = tetro.getCouleur();
-
-        }
-
-    }
-
-    //lance un timer pour faire descendre la piece courrante d une case chaque seconde
-    public void mouvementBasAuto(Forme tetro) {
-        Timer time = new Timer();
-        time.schedule(
-                new TimerTask() {
-
-            @Override
-            public void run() {
-                try {
-                    actualiserUI();
-                    faireTomberPiece(tetro, time);
-                    actualiserUI();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(modeleGenerique.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }, 0, 1000);
-
-    }
 
     //verifie que le mouvement vers la droite est autorise
     public void verificationMouvementDroit(Forme tetro) {
@@ -261,7 +138,7 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
         
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -275,7 +152,7 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -295,11 +172,11 @@ public class modeleGenerique extends Observable {
 
         }
 
-        if (compteur == 4) {
+        if (compteur == tetro.getPositions().size()) {
             mouvementDroit(tetro);
         }
         else{
-            for (int i = 1; i <= 4; i++) {
+            for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -321,7 +198,7 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -334,7 +211,7 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -355,7 +232,7 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
         
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -370,7 +247,7 @@ public class modeleGenerique extends Observable {
         }
         
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -389,11 +266,11 @@ public class modeleGenerique extends Observable {
 
         }
 
-        if (compteur == 4) {
+        if (compteur == tetro.getPositions().size()) {
             mouvementGauche(tetro);
         }
         else{
-            for (int i = 1; i <= 4; i++) {
+            for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -415,7 +292,7 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);
@@ -428,7 +305,7 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
             ligne = (int) tetro.getPositions().get(i).get(0);
             colonne = (int) tetro.getPositions().get(i).get(1);

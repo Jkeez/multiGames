@@ -90,7 +90,7 @@ public class VueControleur extends Application {
         
         vueG.setgPane(gpane);
         vueG.setCenter(vueG.getgPane());
-        vueG.getgPane().setGridLinesVisible(true);
+        vueG.getgPane().setGridLinesVisible(false);
         
         
         ajouterObserver(vueG);
@@ -129,7 +129,7 @@ public class VueControleur extends Application {
 
         
 
-        if (tj.ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
+        if (vueG.getBibliotheque().ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
             vueG.afficherGrille(vueG.getgPane(), vueG.getBibliotheque());
 
             tj.mouvementBasAuto(vueG.getBibliotheque().getPieceCourrante(),vueG);//fait tomber la piece
