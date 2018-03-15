@@ -25,7 +25,7 @@ import src.mvc.tableauJeu;
 public class vueGenerique extends BorderPane {
     
 	modeleGenerique bibliotheque;
-        GridPane gPane;
+    GridPane gPane;
 
     public modeleGenerique getBibliotheque() {
         return bibliotheque;
@@ -35,10 +35,8 @@ public class vueGenerique extends BorderPane {
         this.bibliotheque = bibliotheque;
     }
     public vueGenerique(){
-        super();
-        
+        super();  
         this.bibliotheque=new modeleGenerique();
-        
     }
 
     public GridPane getgPane() {
