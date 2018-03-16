@@ -180,12 +180,13 @@ public class VueControleur extends Application {
                                     int colonne=GridPane.getColumnIndex( node);
                                     System.out.println(  ligne + "/" + colonne);
                                     vueG.getBibliotheque().setPieceCourrante(vueG.rechercheFormeClickee(ligne, colonne));
-                                    System.out.println(vueG.getBibliotheque().getPieceCourrante().getShape());
                                 }
                             }
                         }
                     }
                 });
+                
+                 
                 
                 
                 Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
@@ -195,6 +196,35 @@ public class VueControleur extends Application {
                 primaryStage.setScene(scene);
 
                 primaryStage.show();
+                
+                //ajoute un evenement a capturer sur la scene, capture les saisies claviers
+                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if(vueG.getBibliotheque().getPieceCourrante()!=null){
+                            if(vueG.getBibliotheque().getPieceCourrante().getOrientation()==1){
+                               if (event.getCode() == KeyCode.RIGHT) {
+                                vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante());
+                                }
+                                if (event.getCode() == KeyCode.LEFT) {
+                                    vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante());
+                                } 
+                            }else{
+                                if (event.getCode() == KeyCode.UP) {
+                                vueG.getBibliotheque().verificationMouvementHaut(vueG.getBibliotheque().getPieceCourrante());
+                                }
+                                if (event.getCode() == KeyCode.DOWN) {
+                                    vueG.getBibliotheque().verificationMouvementBas(vueG.getBibliotheque().getPieceCourrante());
+                                } 
+                            }
+                            
+                        }else{
+                            System.out.println("Debug:Aucune piece choisie.");
+                        }
+                        
+                    }
+                });
 
                 
 

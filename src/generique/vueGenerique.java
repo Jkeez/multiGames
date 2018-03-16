@@ -135,11 +135,16 @@ public class vueGenerique extends BorderPane {
             }
         }
     }
-    
+    //construit le plateau du rush hour
     public void initialiserPiecesRushHour(){
         Forme camion=new Forme();
-        camion.objetCamion(0, 0, 1);
+        camion.objetCamion(1, 0, 0);//camion sur (1;0), vertical
         this.getListePieces().add(camion);
+        camion=new Forme();
+        camion.objetCamion(0, 0, 1);//camion sur (0;0), horizontal
+        this.getListePieces().add(camion);
+        
+        //initialise le tableau d'entiers
         for(int i=0;i<this.getListePieces().size();i++){
             for(int j=1;j<=this.getListePieces().get(i).getPositions().size();j++){
                 this.getBibliotheque().getMainBoard()[(int) this.getListePieces().get(i).getPositions().get(j).get(0)][(int) this.getListePieces().get(i).getPositions().get(j).get(1)]=this.getListePieces().get(i).getCouleur();
@@ -148,6 +153,7 @@ public class vueGenerique extends BorderPane {
         }
     }
     
+    //recherche la forme aux indices passees en parametre dans le tableau d'entiers
     public Forme rechercheFormeClickee(int ligne, int colonne){
         for(int i=0;i<this.getListePieces().size();i++){
             for(int j=1;j<=this.getListePieces().get(i).getPositions().size();j++){

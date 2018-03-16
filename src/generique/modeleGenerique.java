@@ -225,7 +225,195 @@ public class modeleGenerique extends Observable {
         }
         actualiserUI();
     }
+    
+    //verifie que le mouvement vers le haut est autorise
+    public void verificationMouvementHaut(Forme tetro) {
+        int ligne = 0, colonne = 0;
+        int a = 0, b = 0;
+        int compteur = 0;
+        
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne-1;
+            b = colonne;
+            mainBoard[ligne][colonne]=0;
+           
+
+        }
+
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne;
+            b = colonne;
+
+            if (modeleGenerique.isOutOfBound(a-1, b) != true) {
+                if(caseLibre(a-1,b)==true){
+                    compteur = compteur + 1;
+                }
+                
+
+            }
+
+        }
+
+        if (compteur == tetro.getPositions().size()) {
+            mouvementHaut(tetro);
+        }
+        else{
+            for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne-1;
+            b = colonne;
+            mainBoard[ligne][colonne]=tetro.getCouleur();
+           
+
+        }
+        }
+    }
+    
+    //deplacement vers le haut de la piece
+    public void mouvementHaut(Forme tetro) {
+        int ligne = 0, colonne = 0;
+        int a = 0, b = 0;
+        int compteur = 0;
+
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne-1;
+            b = colonne;
+            mainBoard[ligne][colonne] = 0;
+
+        }
+
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne-1);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne-1;
+            b = colonne;
+            mainBoard[ligne-1][colonne] = tetro.getCouleur();
+
+        }
+        actualiserUI();
+    }
+
+    //verifie que le mouvement vers le haut est autorise
+    public void verificationMouvementBas(Forme tetro) {
+        int ligne = 0, colonne = 0;
+        int a = 0, b = 0;
+        int compteur = 0;
+        
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne+1;
+            b = colonne;
+            mainBoard[ligne][colonne]=0;
+           
+
+        }
+
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne;
+            b = colonne;
+
+            if (modeleGenerique.isOutOfBound(a+1, b) != true) {
+                if(caseLibre(a+1,b)==true){
+                    compteur = compteur + 1;
+                }
+                
+
+            }
+
+        }
+
+        if (compteur == tetro.getPositions().size()) {
+            mouvementBas(tetro);
+        }
+        else{
+            for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne+1;
+            b = colonne;
+            mainBoard[ligne][colonne]=tetro.getCouleur();
+           
+
+        }
+        }
+    }
+    
+    //deplacement vers le haut de la piece
+    public void mouvementBas(Forme tetro) {
+        int ligne = 0, colonne = 0;
+        int a = 0, b = 0;
+        int compteur = 0;
+
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne+1;
+            b = colonne;
+            mainBoard[ligne][colonne] = 0;
+
+        }
+
+        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+
+            ligne = (int) tetro.getPositions().get(i).get(0);
+            colonne = (int) tetro.getPositions().get(i).get(1);
+            tetro.getPositions().get(i).add(0, ligne+1);
+            tetro.getPositions().get(i).add(1, colonne);
+
+            a = ligne+1;
+            b = colonne;
+            mainBoard[ligne+1][colonne] = tetro.getCouleur();
+
+        }
+        actualiserUI();
+    }
+    
     //verifie que le mouvement vers la gauche est autorise
     public void verificationMouvementGauche(Forme tetro) {
         int ligne = 0, colonne = 0;

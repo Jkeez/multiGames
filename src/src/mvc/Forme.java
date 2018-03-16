@@ -24,6 +24,24 @@ public class Forme extends Observable {
     private Color colorType;
 
     private String shape;
+    
+    int orientation;
+
+    public Color getColorType() {
+        return colorType;
+    }
+
+    public void setColorType(Color colorType) {
+        this.colorType = colorType;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
+    }
 
     private Map<Integer, ArrayList> positions = new HashMap<Integer, ArrayList>();
 
@@ -45,6 +63,7 @@ public class Forme extends Observable {
     public boolean isFalling() {
         return Falling;
     }
+    
 
     public void setFalling(boolean isFalling) {
         this.Falling = isFalling;
@@ -137,6 +156,7 @@ public class Forme extends Observable {
     public void objetCamion(int x,int y, int orientation) {
 
        if(orientation==1){
+           this.setOrientation(1);
            ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
         p1.add(x);//ligne (index 0)
         p1.add(y);//colonne (index 1)
