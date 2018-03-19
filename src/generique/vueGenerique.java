@@ -8,11 +8,14 @@ package generique;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javafx.application.Platform;
+import javafx.scene.Scene;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import src.mvc.Forme;
 import src.mvc.tableauJeu;
@@ -28,7 +31,35 @@ public class vueGenerique extends BorderPane {
     
 	modeleGenerique bibliotheque;
         GridPane gPane;
+        private int nbCoup;
+        private Chrono chrono;
+        private Text temps;
+
+    public Chrono getChrono() {
+        return chrono;
+    }
+
+    public void setChrono(Chrono chrono) {
+        this.chrono = chrono;
+    }
+
+    public int getNbCoup() {
+        return nbCoup;
+    }
+
+    public void setNbCoup(int nbCoup) {
+        this.nbCoup = nbCoup;
+    }
         ArrayList<Forme> listePieces =new ArrayList<Forme>();
+        private boolean partieTerminee;
+
+    public boolean isPartieTerminee() {
+        return partieTerminee;
+    }
+
+    public void setPartieTerminee(boolean partieTerminee) {
+        this.partieTerminee = partieTerminee;
+    }
 
     public ArrayList<Forme> getListePieces() {
         return listePieces;
@@ -48,6 +79,8 @@ public class vueGenerique extends BorderPane {
     public vueGenerique(){
         super();  
         this.bibliotheque=new modeleGenerique();
+        this.partieTerminee=false;
+        this.chrono=new Chrono();
         
     }
 
@@ -67,21 +100,15 @@ public class vueGenerique extends BorderPane {
             public void update(Observable o, Object arg) {
                 vueG.initialiserGrille();
                 vueG.afficherGrille(vueG.gPane, vueG.getBibliotheque());
+                vueG.setRight(null);
+                vueG.temps=new Text(vueG.getChrono().getDureeTxt());
+                vueG.setRight(vueG.temps);//tentative affichage temps
+                
             }
+            
         });
     }
-    
-    //different de ajouterObserver car on appel des fonctions d'actualisations construites differements
-    public static void ajouterObserverRushHour(vueGenerique vueG){
-        vueG.getBibliotheque().addObserver(new Observer() {
-
-            @Override
-            public void update(Observable o, Object arg) {
-                vueG.initialiserGrilleRushHour();
-                vueG.afficherGrilleRushHour(vueG.gPane, vueG.getBibliotheque());
-            }
-        });
-    }
+  
    
     //initialise un gridpane vide
     public void initialiserGrille() {
@@ -143,6 +170,10 @@ public class vueGenerique extends BorderPane {
         camion=new Forme();
         camion.objetCamion(0, 0, 1);//camion sur (0;0), horizontal
         this.getListePieces().add(camion);
+        camion=new Forme();
+        camion.objetVoitureJoueur(5, 0);//voiture du joueur sur (5;0), horizontal
+        this.getListePieces().add(camion);
+        
         
         //initialise le tableau d'entiers
         for(int i=0;i<this.getListePieces().size();i++){

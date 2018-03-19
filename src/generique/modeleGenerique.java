@@ -101,7 +101,7 @@ public class modeleGenerique extends Observable {
             public void run() {
                 try {
 
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                     actualiserUI();
 
                 } catch (InterruptedException v) {
@@ -112,6 +112,18 @@ public class modeleGenerique extends Observable {
 
         one.start();
 
+    }
+    
+    public void autoRefresh(vueGenerique vueG){
+        Timer time = new Timer();
+        time.schedule(
+                new TimerTask() {
+
+            @Override
+            public void run() {
+                vueG.getBibliotheque().actualiserUI();
+            }
+        }, 0, 1000);
     }
 
     //verifie si la case cible est libre
@@ -133,10 +145,17 @@ public class modeleGenerique extends Observable {
 
 
     //verifie que le mouvement vers la droite est autorise
-    public void verificationMouvementDroit(Forme tetro) {
+    public void verificationMouvementDroit(Forme tetro, vueGenerique vueG) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
         int compteur = 0;
+        
+        if(tetro.getShape().equals("voitureJoueur")){
+            if(modeleGenerique.isOutOfBound((int)tetro.getPositions().get(4).get(0), (int)tetro.getPositions().get(4).get(1)+1)==true){
+                vueG.setPartieTerminee(true);
+                actualiserUI();
+            }
+        }
         
         for (int i = 1; i <= tetro.getPositions().size(); i++) {
 
@@ -173,6 +192,7 @@ public class modeleGenerique extends Observable {
         }
 
         if (compteur == tetro.getPositions().size()) {
+            vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementDroit(tetro);
         }
         else{
@@ -223,11 +243,13 @@ public class modeleGenerique extends Observable {
             mainBoard[ligne][colonne + 1] = tetro.getCouleur();
 
         }
+        
         actualiserUI();
+        
     }
     
     //verifie que le mouvement vers le haut est autorise
-    public void verificationMouvementHaut(Forme tetro) {
+    public void verificationMouvementHaut(Forme tetro, vueGenerique vueG) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
         int compteur = 0;
@@ -267,6 +289,7 @@ public class modeleGenerique extends Observable {
         }
 
         if (compteur == tetro.getPositions().size()) {
+            vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementHaut(tetro);
         }
         else{
@@ -321,7 +344,7 @@ public class modeleGenerique extends Observable {
     }
 
     //verifie que le mouvement vers le haut est autorise
-    public void verificationMouvementBas(Forme tetro) {
+    public void verificationMouvementBas(Forme tetro, vueGenerique vueG) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
         int compteur = 0;
@@ -361,6 +384,7 @@ public class modeleGenerique extends Observable {
         }
 
         if (compteur == tetro.getPositions().size()) {
+            vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementBas(tetro);
         }
         else{
@@ -415,7 +439,7 @@ public class modeleGenerique extends Observable {
     }
     
     //verifie que le mouvement vers la gauche est autorise
-    public void verificationMouvementGauche(Forme tetro) {
+    public void verificationMouvementGauche(Forme tetro, vueGenerique vueG) {
         int ligne = 0, colonne = 0;
         int a = 0, b = 0;
         int compteur = 0;
@@ -455,6 +479,7 @@ public class modeleGenerique extends Observable {
         }
 
         if (compteur == tetro.getPositions().size()) {
+            vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementGauche(tetro);
         }
         else{

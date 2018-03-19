@@ -13,8 +13,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import generique.vueGenerique;
+import generique.Chrono;
 import static generique.vueGenerique.ajouterObserver;
 import java.awt.Button;
+import java.awt.Label;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.Optional;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 import javafx.event.EventHandler;
@@ -30,6 +33,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.DropShadow;
@@ -48,6 +54,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import src.mvc.Forme;
 import src.mvc.tableauJeu;
@@ -67,6 +75,10 @@ public class VueControleur extends Application {
     public void start(Stage primaryStage) throws InterruptedException {
     	
 
+        Chrono chrono = new Chrono();
+        
+      
+        
         
         List<String> choices = new ArrayList<>();
         
@@ -81,6 +93,8 @@ public class VueControleur extends Application {
         
         if(result.isPresent()){
             if(result.get()=="Tetris"){
+                chrono.start(); // démarrage du chrono
+        
                 System.out.println("choix :"+result.get());
 
 
@@ -121,10 +135,10 @@ public class VueControleur extends Application {
                     @Override
                     public void handle(KeyEvent event) {
                         if (event.getCode() == KeyCode.RIGHT) {
-                            vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante());
+                            vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante(), vueG);
                         }
                         if (event.getCode() == KeyCode.LEFT) {
-                            vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante());
+                            vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante(),vueG);
                         }
                     }
                 });
@@ -147,13 +161,16 @@ public class VueControleur extends Application {
                 //faireTomberPiece(tetro, gPane);
             }
             if(result.get()=="Rush Hour"){
+                vueG.getChrono().start(); // démarrage du chrono
+                int nbCoup;
                 System.out.println("choix :"+result.get());
+                Text temps = new Text("temps");
 
                 int column = 0;
                 int row = 0;
                 GridPane gpane=new GridPane();
                 
-                
+                vueG.setRight(temps);
 
                 vueG.setgPane(gpane);
                 vueG.setCenter(vueG.getgPane());
@@ -162,8 +179,7 @@ public class VueControleur extends Application {
                 ajouterObserver(vueG);
                 vueG.setPrefSize(600,400);
                 vueG.setStyle("-fx-border-color: black;");
-                Parent border = null;
-
+                vueG.getBibliotheque().autoRefresh(vueG);
                 vueG.initialiserPiecesRushHour();
                 vueG.initialiserGrilleRushHour();
                 vueG.afficherGrilleRushHour(gpane, vueG.getBibliotheque());
@@ -194,6 +210,7 @@ public class VueControleur extends Application {
 
                 primaryStage.setTitle("MultiGames");
                 primaryStage.setScene(scene);
+                
 
                 primaryStage.show();
                 
@@ -205,17 +222,35 @@ public class VueControleur extends Application {
                         if(vueG.getBibliotheque().getPieceCourrante()!=null){
                             if(vueG.getBibliotheque().getPieceCourrante().getOrientation()==1){
                                if (event.getCode() == KeyCode.RIGHT) {
-                                vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante());
+                                   
+                                vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante(), vueG);
+                                    if(vueG.isPartieTerminee()){
+                                        vueG.getChrono().stop(); // arrêt
+    
+                                        System.out.println(vueG.getChrono().getDureeTxt()); // affichage au format "1 h 26 min 32 s"
+                                        Alert alert = new Alert(AlertType.CONFIRMATION);
+                                        alert.setTitle("Partie terminee !");
+                                        alert.setHeaderText("Score");
+                                        alert.setContentText("Temps: "+vueG.getChrono().getDureeTxt()+" avec "+vueG.getNbCoup()+" coup(s)!");
+                                        alert.getDialogPane().lookupButton(ButtonType.CANCEL).setVisible(false);
+                                        Optional<ButtonType> result = alert.showAndWait();
+                                        
+                                        if (result.get() == ButtonType.OK){
+                                            Platform.exit();
+                                        } else{
+                                            Platform.exit();
+                                        }
+                                    }
                                 }
                                 if (event.getCode() == KeyCode.LEFT) {
-                                    vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante());
+                                    vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante(),vueG);
                                 } 
                             }else{
                                 if (event.getCode() == KeyCode.UP) {
-                                vueG.getBibliotheque().verificationMouvementHaut(vueG.getBibliotheque().getPieceCourrante());
+                                vueG.getBibliotheque().verificationMouvementHaut(vueG.getBibliotheque().getPieceCourrante(),vueG);
                                 }
                                 if (event.getCode() == KeyCode.DOWN) {
-                                    vueG.getBibliotheque().verificationMouvementBas(vueG.getBibliotheque().getPieceCourrante());
+                                    vueG.getBibliotheque().verificationMouvementBas(vueG.getBibliotheque().getPieceCourrante(),vueG);
                                 } 
                             }
                             
@@ -230,73 +265,7 @@ public class VueControleur extends Application {
 
             }
             }
-        // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
-       
-       
-        // permet de placer les diffrents boutons dans une grille
-/*
-        
-        int column = 0;
-        int row = 0;
-        GridPane gpane=new GridPane();
-       
-        
-        vueG.setgPane(gpane);
-        vueG.setCenter(vueG.getgPane());
-        vueG.getgPane().setGridLinesVisible(true);
-        
-        
-        ajouterObserver(vueG);
-        vueG.setPrefSize(600,400);
-        vueG.setStyle("-fx-border-color: black;");
-        Parent border = null;
-
-        vueG.initialiserGrille();
-        Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
-
-        
-        primaryStage.setTitle("MultiGames");
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
-       
-      
-        Forme tetroCourrant = new Forme();
-        vueG.getBibliotheque().setPieceCourrante(tetroCourrant);
-        
-        
-        
-        //ajoute un evenement a capturer sur la scene, capture les saisies claviers
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.RIGHT) {
-                    vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante());
-                }
-                if (event.getCode() == KeyCode.LEFT) {
-                    vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante());
-                }
-            }
-        });
-
-        
-
-        if (tj.ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
-            vueG.afficherGrille(vueG.getgPane(), vueG.getBibliotheque());
-
-            tj.mouvementBasAuto(vueG.getBibliotheque().getPieceCourrante(),vueG);//fait tomber la piece
-
-        } else {
-            System.out.println("Fin de partie");
-        }
-        //Forme tetro = new Forme();
-        //m.testGrille();
-        //tetro=tj.popTetrominoes( mainBoard);//ajoute tetrominos au jeu + recupere forme
-
-        //ajouterTetrominosJeu(tetro, gPane);
-        //faireTomberPiece(tetro, gPane);
-        */
+     
     }
 
 

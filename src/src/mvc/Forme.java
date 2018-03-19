@@ -25,7 +25,8 @@ public class Forme extends Observable {
 
     private String shape;
     
-    int orientation;
+    private int orientation;
+   
 
     public Color getColorType() {
         return colorType;
@@ -235,6 +236,111 @@ public class Forme extends Observable {
 
         this.shape = "camion";
        }
+        
+
+    }
+    
+     //genere une voiture pour le rushHour ,case initiale a (x,y), orientation designera DROIT si 1 BAS sinon
+    public void objetVoiture(int x,int y, int orientation) {
+
+       if(orientation==1){
+           this.setOrientation(1);
+           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
+        p1.add(x);//ligne (index 0)
+        p1.add(y);//colonne (index 1)
+
+        this.positions.put(1, p1);//insere les coordonnees dans la map
+
+        //idem pour les autres cases
+        ArrayList<Integer> p2 = new ArrayList<Integer>();
+        p2.add(x);
+        p2.add(y+1);
+
+        this.positions.put(2, p2);
+
+        ArrayList<Integer> p3 = new ArrayList<Integer>();
+        p3.add(x);
+        p3.add(y+2);
+
+        this.positions.put(3, p3);
+
+        ArrayList<Integer> p4 = new ArrayList<Integer>();
+        p4.add(x);
+        p4.add(y+3);
+
+        this.positions.put(4, p4);
+        
+        
+
+        this.shape = "voiture";
+       }else{
+           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
+        p1.add(x);//ligne (index 0)
+        p1.add(y);//colonne (index 1)
+
+        this.positions.put(1, p1);//insere les coordonnees dans la map
+
+        //idem pour les autres cases
+        ArrayList<Integer> p2 = new ArrayList<Integer>();
+        p2.add(x+1);
+        p2.add(y);
+
+        this.positions.put(2, p2);
+
+        ArrayList<Integer> p3 = new ArrayList<Integer>();
+        p3.add(x+2);
+        p3.add(y);
+
+        this.positions.put(3, p3);
+
+        ArrayList<Integer> p4 = new ArrayList<Integer>();
+        p4.add(x+3);
+        p4.add(y);
+
+        this.positions.put(4, p4);
+        
+       
+
+        this.shape = "voiture";
+       }
+        
+
+    }
+    
+    //genere une voiture joueur pour le rushHour qui est la voiture a deplacer jusqua l'arriver,case initiale a (x,y), orientation designera DROIT si 1 BAS sinon
+    public void objetVoitureJoueur(int x,int y) {
+
+     
+           this.setOrientation(1);
+           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
+        p1.add(x);//ligne (index 0)
+        p1.add(y);//colonne (index 1)
+
+        this.positions.put(1, p1);//insere les coordonnees dans la map
+
+        //idem pour les autres cases
+        ArrayList<Integer> p2 = new ArrayList<Integer>();
+        p2.add(x);
+        p2.add(y+1);
+
+        this.positions.put(2, p2);
+
+        ArrayList<Integer> p3 = new ArrayList<Integer>();
+        p3.add(x);
+        p3.add(y+2);
+
+        this.positions.put(3, p3);
+
+        ArrayList<Integer> p4 = new ArrayList<Integer>();
+        p4.add(x);
+        p4.add(y+3);
+
+        this.positions.put(4, p4);
+        
+        
+
+        this.shape = "voitureJoueur";
+       
         
 
     }
