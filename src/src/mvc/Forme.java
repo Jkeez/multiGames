@@ -1,7 +1,11 @@
 /*
 La classe forme definit un tetrominos d'un tetris avec une couleur, map de positions dans le jeu principalement.
  */
-package src.mvc;
+//package src.mvc;
+package mvc;
+
+import generique.FormeGenerique;
+
 
 import java.util.Random;
 import java.lang.Math;
@@ -26,8 +30,12 @@ public class Forme extends Observable {
     private String shape;
     
     private int orientation;
+    
+    public Forme() {
+        FormeGenerique forme1 =new FormeGenerique();
+    }
    
-
+/*
     public Color getColorType() {
         return colorType;
     }
@@ -347,5 +355,5 @@ public class Forme extends Observable {
 
     public String getShape() {
         return shape;
-    }
+    }*/
 }

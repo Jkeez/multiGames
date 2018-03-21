@@ -5,6 +5,7 @@ package src.mvc;
 
 import generique.modeleGenerique;
 import generique.vueGenerique;
+
 import static java.lang.Thread.sleep;
 import java.util.Observable;
 import java.util.Observer;
