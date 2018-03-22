@@ -57,25 +57,23 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import src.mvc.Forme;
-import src.mvc.tableauJeu;
+import mvc.Forme;
+import src.mvc.modeleRushHour;
 
 
 public class VueControleur extends Application {
 
     vueGenerique vueG = new vueGenerique();
-    
-    
     tableauJeu tj = new tableauJeu();
+    
 
     int[][] mainBoard = vueG.getBibliotheque().getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
 
 
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
-    	
-
         Chrono chrono = new Chrono();
+        modeleRushHour modRH = new modeleRushHour();
         
       
         
@@ -92,7 +90,7 @@ public class VueControleur extends Application {
         Optional<String> result = dialog.showAndWait();
         
         if(result.isPresent()){
-            if(result.get()=="Tetris"){
+           /* if(result.get()=="Tetris"){
                 chrono.start(); // démarrage du chrono
         
                 System.out.println("choix :"+result.get());
@@ -159,8 +157,10 @@ public class VueControleur extends Application {
 
                 //ajouterTetrominosJeu(tetro, gPane);
                 //faireTomberPiece(tetro, gPane);
-            }
+            }*/
             if(result.get()=="Rush Hour"){
+                
+                
                 vueG.getChrono().start(); // démarrage du chrono
                 int nbCoup;
                 System.out.println("choix :"+result.get());
@@ -180,9 +180,9 @@ public class VueControleur extends Application {
                 vueG.setPrefSize(600,400);
                 vueG.setStyle("-fx-border-color: black;");
                 vueG.getBibliotheque().autoRefresh(vueG);
-                vueG.initialiserPiecesRushHour();
-                vueG.initialiserGrilleRushHour();
-                vueG.afficherGrilleRushHour(gpane, vueG.getBibliotheque());
+                modRH.initialiserPiecesRushHour(vueG);
+                vueG.initialiserGrille();
+                vueG.afficherGrille(gpane, vueG.getBibliotheque());
                 
                 gpane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                     @Override
@@ -194,8 +194,9 @@ public class VueControleur extends Application {
                                 if( node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
                                     int ligne=GridPane.getRowIndex( node);
                                     int colonne=GridPane.getColumnIndex( node);
-                                    System.out.println(  ligne + "/" + colonne);
-                                    vueG.getBibliotheque().setPieceCourrante(vueG.rechercheFormeClickee(ligne, colonne));
+                                    
+                                    vueG.getBibliotheque().setPieceCourrante(vueG.getBibliotheque().rechercheFormeClickee(ligne, colonne, modRH));
+                                    
                                 }
                             }
                         }
@@ -220,27 +221,12 @@ public class VueControleur extends Application {
                     @Override
                     public void handle(KeyEvent event) {
                         if(vueG.getBibliotheque().getPieceCourrante()!=null){
-                            if(vueG.getBibliotheque().getPieceCourrante().getOrientation()==1){
+                            if(vueG.getBibliotheque().getPieceCourrante().getForme1().getOrientation()==1){
                                if (event.getCode() == KeyCode.RIGHT) {
                                    
-                                vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante(), vueG);
-                                    if(vueG.isPartieTerminee()){
-                                        vueG.getChrono().stop(); // arrêt
-    
-                                        System.out.println(vueG.getChrono().getDureeTxt()); // affichage au format "1 h 26 min 32 s"
-                                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                                        alert.setTitle("Partie terminee !");
-                                        alert.setHeaderText("Score");
-                                        alert.setContentText("Temps: "+vueG.getChrono().getDureeTxt()+" avec "+vueG.getNbCoup()+" coup(s)!");
-                                        alert.getDialogPane().lookupButton(ButtonType.CANCEL).setVisible(false);
-                                        Optional<ButtonType> result = alert.showAndWait();
-                                        
-                                        if (result.get() == ButtonType.OK){
-                                            Platform.exit();
-                                        } else{
-                                            Platform.exit();
-                                        }
-                                    }
+                                   
+                                modRH.deplacementDroite(vueG);
+                                   
                                 }
                                 if (event.getCode() == KeyCode.LEFT) {
                                     vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante(),vueG);
@@ -275,7 +261,7 @@ public class VueControleur extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    	
+    	   
         launch(args);
     }
 

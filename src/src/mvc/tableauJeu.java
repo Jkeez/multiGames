@@ -1,7 +1,7 @@
 /*
 la classe tableauJeu permet la gestion des deplacements des pieces du jeu.
  */
-package src.mvc;
+package mvc;
 
 import generique.modeleGenerique;
 import generique.vueGenerique;
@@ -45,7 +45,7 @@ public class tableauJeu extends Observable {
         
 
     }
-
+/*
     //verifie pour chaque case que le mouvement vers le bas est autorise, ajoute une nouvelle piece sinon
     public void faireTomberPiece(Forme tetro, Timer time, vueGenerique vueG) throws InterruptedException {
         int ligne = 0, colonne = 0;
@@ -171,5 +171,5 @@ public class tableauJeu extends Observable {
 
     }
 
-
+*/
 }

@@ -7,7 +7,9 @@ package generique;
 
 
 
+
 import static java.lang.Thread.sleep;
+
 
 
 import java.util.Observable;
@@ -26,7 +28,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import src.mvc.Forme;
+import mvc.Forme;
+import src.mvc.modeleRushHour;
+
+
+
+
 
 /**
  *
@@ -62,7 +69,7 @@ public class modeleGenerique extends Observable {
     public int[][] getMainBoard() {
         return mainBoard;
     }
-
+/*
     //ajoute au modele les positions de la piece que l'on souhaite ajouter, renvoie false si l'ajout est impossible.
     public boolean ajouterPiece(Forme tetro) throws InterruptedException {
         int ligne, colonne;
@@ -70,11 +77,11 @@ public class modeleGenerique extends Observable {
         //parcours chaque case de la piece pour recuperer sa ligne et sa colonne
         for (int i = 1; i <= 4; i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
 
             if (caseLibre(ligne, colonne)) {
-                mainBoard[ligne][colonne] = tetro.getCouleur();
+                mainBoard[ligne][colonne] = tetro.getForme1().getCouleur();
             } else {
                 return false;
             }
@@ -83,7 +90,7 @@ public class modeleGenerique extends Observable {
 
         return true;
     }
-
+*/
     //fonction qui declenche l'observer afin de mettre a jour l'UI
     public void actualiserUI() {
         Platform.runLater(new Runnable() {
@@ -151,19 +158,14 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
         
-        if(tetro.getShape().equals("voitureJoueur")){
-            if(modeleGenerique.isOutOfBound((int)tetro.getPositions().get(4).get(0), (int)tetro.getPositions().get(4).get(1)+1)==true){
-                vueG.setPartieTerminee(true);
-                actualiserUI();
-            }
-        }
+       
         
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne+1;
@@ -172,12 +174,12 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne;
@@ -192,21 +194,21 @@ public class modeleGenerique extends Observable {
 
         }
 
-        if (compteur == tetro.getPositions().size()) {
+        if (compteur == tetro.getForme1().getPositions().size()) {
             vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementDroit(tetro);
         }
         else{
-            for (int i = 1; i <= tetro.getPositions().size(); i++) {
+            for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne+1;
-            mainBoard[ligne][colonne]=tetro.getCouleur();
+            mainBoard[ligne][colonne]=tetro.getForme1().getCouleur();
            
 
         }
@@ -219,12 +221,12 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne + 1;
@@ -232,16 +234,16 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne + 1);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne + 1);
 
             a = ligne;
             b = colonne + 1;
-            mainBoard[ligne][colonne + 1] = tetro.getCouleur();
+            mainBoard[ligne][colonne + 1] = tetro.getForme1().getCouleur();
 
         }
         
@@ -255,12 +257,12 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
         
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne-1;
             b = colonne;
@@ -269,12 +271,12 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne;
@@ -289,21 +291,22 @@ public class modeleGenerique extends Observable {
 
         }
 
-        if (compteur == tetro.getPositions().size()) {
+        if (compteur == tetro.getForme1().getPositions().size()) {
             vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementHaut(tetro);
         }
         else{
-            for (int i = 1; i <= tetro.getPositions().size(); i++) {
+            for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+         
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne-1;
             b = colonne;
-            mainBoard[ligne][colonne]=tetro.getCouleur();
+            mainBoard[ligne][colonne]=tetro.getForme1().getCouleur();
            
 
         }
@@ -316,12 +319,12 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne-1;
             b = colonne;
@@ -329,16 +332,16 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne-1);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne-1);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne-1;
             b = colonne;
-            mainBoard[ligne-1][colonne] = tetro.getCouleur();
+            mainBoard[ligne-1][colonne] = tetro.getForme1().getCouleur();
 
         }
         actualiserUI();
@@ -350,12 +353,12 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
         
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne+1;
             b = colonne;
@@ -364,12 +367,12 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne;
@@ -384,21 +387,21 @@ public class modeleGenerique extends Observable {
 
         }
 
-        if (compteur == tetro.getPositions().size()) {
+        if (compteur == tetro.getForme1().getPositions().size()) {
             vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementBas(tetro);
         }
         else{
-            for (int i = 1; i <= tetro.getPositions().size(); i++) {
+            for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne+1;
             b = colonne;
-            mainBoard[ligne][colonne]=tetro.getCouleur();
+            mainBoard[ligne][colonne]=tetro.getForme1().getCouleur();
            
 
         }
@@ -411,12 +414,12 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne+1;
             b = colonne;
@@ -424,16 +427,16 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne+1);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne+1);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne+1;
             b = colonne;
-            mainBoard[ligne+1][colonne] = tetro.getCouleur();
+            mainBoard[ligne+1][colonne] = tetro.getForme1().getCouleur();
 
         }
         actualiserUI();
@@ -445,12 +448,12 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
         
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne-1;
@@ -460,12 +463,12 @@ public class modeleGenerique extends Observable {
         }
         
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne;
@@ -479,21 +482,21 @@ public class modeleGenerique extends Observable {
 
         }
 
-        if (compteur == tetro.getPositions().size()) {
+        if (compteur == tetro.getForme1().getPositions().size()) {
             vueG.setNbCoup(vueG.getNbCoup()+1);
             mouvementGauche(tetro);
         }
         else{
-            for (int i = 1; i <= tetro.getPositions().size(); i++) {
+            for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne;
-            mainBoard[ligne][colonne]=tetro.getCouleur();
+            mainBoard[ligne][colonne]=tetro.getForme1().getCouleur();
            
 
         }
@@ -506,12 +509,12 @@ public class modeleGenerique extends Observable {
         int a = 0, b = 0;
         int compteur = 0;
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne);
 
             a = ligne;
             b = colonne - 1;
@@ -519,20 +522,33 @@ public class modeleGenerique extends Observable {
 
         }
 
-        for (int i = 1; i <= tetro.getPositions().size(); i++) {
+        for (int i = 1; i <= tetro.getForme1().getPositions().size(); i++) {
 
-            ligne = (int) tetro.getPositions().get(i).get(0);
-            colonne = (int) tetro.getPositions().get(i).get(1);
-            tetro.getPositions().get(i).add(0, ligne);
-            tetro.getPositions().get(i).add(1, colonne - 1);
+            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
+            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
+            tetro.getForme1().getPositions().get(i).add(0, ligne);
+            tetro.getForme1().getPositions().get(i).add(1, colonne - 1);
 
             a = ligne;
             b = colonne - 1;
-            mainBoard[ligne][colonne - 1] = tetro.getCouleur();
-
+            mainBoard[ligne][colonne - 1] = tetro.getForme1().getCouleur();
         }
         actualiserUI();
     }
+    
+    	// recherche la forme aux indices passees en parametre dans le tableau d'entiers
+	public Forme rechercheFormeClickee(int ligne, int colonne, modeleRushHour modRH) {
+		for (int i = 0; i < modRH.getListePieces().size(); i++) {
+			for (int j = 1; j <= modRH.getListePieces().get(i).getForme1().getPositions().size(); j++) {
+				if ((int) modRH.getListePieces().get(i).getForme1().getPositions().get(j).get(0) == ligne
+						&& (int) modRH.getListePieces().get(i).getForme1().getPositions().get(j).get(1) == colonne) {
+					return modRH.getListePieces().get(i);
+				}
+
+			}
+		}
+		return null;
+	}
 
 }
 

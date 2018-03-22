@@ -6,6 +6,7 @@ La classe forme definit un tetrominos d'un tetris avec une couleur, map de posit
 
 import java.util.Random;
 
+
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,16 +61,11 @@ public class FormeGenerique {
         setColorType(couleur);
     }
 
-    public boolean isFalling() {
-        return Falling;
-    }
-    
+    public void setShape(String shape) {
+		this.shape = shape;
+	}
 
-    public void setFalling(boolean isFalling) {
-        this.Falling = isFalling;
-    }
-
-    public int getCouleur() {
+	public int getCouleur() {
         return couleur;
     }
 
@@ -119,230 +115,7 @@ public class FormeGenerique {
         }
     }
 
-    //genere une forme aleatoire
-    public void setShape() {
-
-        //test avec S
-        ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
-        p1.add(0);//ligne (index 0)
-        p1.add(5);//colonne (index 1)
-
-        this.positions.put(1, p1);//insere les coordonnees dans la map
-
-        //idem pour les autres cases
-        ArrayList<Integer> p2 = new ArrayList<Integer>();
-        p2.add(0);
-        p2.add(6);
-
-        this.positions.put(2, p2);
-
-        ArrayList<Integer> p3 = new ArrayList<Integer>();
-        p3.add(1);
-        p3.add(6);
-
-        this.positions.put(3, p3);
-
-        ArrayList<Integer> p4 = new ArrayList<Integer>();
-        p4.add(1);
-        p4.add(7);
-
-        this.positions.put(4, p4);
-
-        this.shape = "s";
-
-    }
-    
-    //genere un camion pour le rushHour ,case initiale a (x,y), orientation designera DROIT si 1 BAS sinon
-    public void objetCamion(int x,int y, int orientation) {
-
-       if(orientation==1){
-           this.setOrientation(1);
-           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
-        p1.add(x);//ligne (index 0)
-        p1.add(y);//colonne (index 1)
-
-        this.positions.put(1, p1);//insere les coordonnees dans la map
-
-        //idem pour les autres cases
-        ArrayList<Integer> p2 = new ArrayList<Integer>();
-        p2.add(x);
-        p2.add(y+1);
-
-        this.positions.put(2, p2);
-
-        ArrayList<Integer> p3 = new ArrayList<Integer>();
-        p3.add(x);
-        p3.add(y+2);
-
-        this.positions.put(3, p3);
-
-        ArrayList<Integer> p4 = new ArrayList<Integer>();
-        p4.add(x);
-        p4.add(y+3);
-
-        this.positions.put(4, p4);
-        
-        ArrayList<Integer> p5 = new ArrayList<Integer>();
-        p5.add(x);
-        p5.add(y+4);
-
-        this.positions.put(5, p5);
-        
-        ArrayList<Integer> p6 = new ArrayList<Integer>();
-        p6.add(x);
-        p6.add(y+5);
-
-        this.positions.put(6, p6);
-
-        this.shape = "camion";
-       }else{
-           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
-        p1.add(x);//ligne (index 0)
-        p1.add(y);//colonne (index 1)
-
-        this.positions.put(1, p1);//insere les coordonnees dans la map
-
-        //idem pour les autres cases
-        ArrayList<Integer> p2 = new ArrayList<Integer>();
-        p2.add(x+1);
-        p2.add(y);
-
-        this.positions.put(2, p2);
-
-        ArrayList<Integer> p3 = new ArrayList<Integer>();
-        p3.add(x+2);
-        p3.add(y);
-
-        this.positions.put(3, p3);
-
-        ArrayList<Integer> p4 = new ArrayList<Integer>();
-        p4.add(x+3);
-        p4.add(y);
-
-        this.positions.put(4, p4);
-        
-        ArrayList<Integer> p5 = new ArrayList<Integer>();
-        p5.add(x+4);
-        p5.add(y);
-
-        this.positions.put(5, p5);
-        
-        ArrayList<Integer> p6 = new ArrayList<Integer>();
-        p6.add(x+5);
-        p6.add(y);
-
-        this.positions.put(6, p6);
-
-        this.shape = "camion";
-       }
-        
-
-    }
-    
-     //genere une voiture pour le rushHour ,case initiale a (x,y), orientation designera DROIT si 1 BAS sinon
-    public void objetVoiture(int x,int y, int orientation) {
-
-       if(orientation==1){
-           this.setOrientation(1);
-           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
-        p1.add(x);//ligne (index 0)
-        p1.add(y);//colonne (index 1)
-
-        this.positions.put(1, p1);//insere les coordonnees dans la map
-
-        //idem pour les autres cases
-        ArrayList<Integer> p2 = new ArrayList<Integer>();
-        p2.add(x);
-        p2.add(y+1);
-
-        this.positions.put(2, p2);
-
-        ArrayList<Integer> p3 = new ArrayList<Integer>();
-        p3.add(x);
-        p3.add(y+2);
-
-        this.positions.put(3, p3);
-
-        ArrayList<Integer> p4 = new ArrayList<Integer>();
-        p4.add(x);
-        p4.add(y+3);
-
-        this.positions.put(4, p4);
-        
-        
-
-        this.shape = "voiture";
-       }else{
-           ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
-        p1.add(x);//ligne (index 0)
-        p1.add(y);//colonne (index 1)
-
-        this.positions.put(1, p1);//insere les coordonnees dans la map
-
-        //idem pour les autres cases
-        ArrayList<Integer> p2 = new ArrayList<Integer>();
-        p2.add(x+1);
-        p2.add(y);
-
-        this.positions.put(2, p2);
-
-        ArrayList<Integer> p3 = new ArrayList<Integer>();
-        p3.add(x+2);
-        p3.add(y);
-
-        this.positions.put(3, p3);
-
-        ArrayList<Integer> p4 = new ArrayList<Integer>();
-        p4.add(x+3);
-        p4.add(y);
-
-        this.positions.put(4, p4);
-        
-       
-
-        this.shape = "voiture";
-       }
-        
-
-    }
-    
-    //genere une voiture joueur pour le rushHour qui est la voiture a deplacer jusqua l'arriver,case initiale a (x,y), orientation designera DROIT si 1 BAS sinon
-   public void objetVoitureJoueur(int x,int y, Forme forme) {
-
-     
-        forme.setOrientation(1);
-        ArrayList<Integer> p1 = new ArrayList<Integer>();//liste de coordonnees
-        p1.add(x);//ligne (index 0)
-        p1.add(y);//colonne (index 1)
-
-        this.positions.put(1, p1);//insere les coordonnees dans la map
-
-        //idem pour les autres cases
-        ArrayList<Integer> p2 = new ArrayList<Integer>();
-        p2.add(x);
-        p2.add(y+1);
-
-        this.positions.put(2, p2);
-
-        ArrayList<Integer> p3 = new ArrayList<Integer>();
-        p3.add(x);
-        p3.add(y+2);
-
-        this.positions.put(3, p3);
-
-        ArrayList<Integer> p4 = new ArrayList<Integer>();
-        p4.add(x);
-        p4.add(y+3);
-
-        this.positions.put(4, p4);
-        
-        
-
-        this.shape = "voitureJoueur";
-       
-        
-
-    }
+ 
 
     public String getShape() {
         return shape;
