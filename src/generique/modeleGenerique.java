@@ -69,28 +69,7 @@ public class modeleGenerique extends Observable {
     public int[][] getMainBoard() {
         return mainBoard;
     }
-/*
-    //ajoute au modele les positions de la piece que l'on souhaite ajouter, renvoie false si l'ajout est impossible.
-    public boolean ajouterPiece(Forme tetro) throws InterruptedException {
-        int ligne, colonne;
 
-        //parcours chaque case de la piece pour recuperer sa ligne et sa colonne
-        for (int i = 1; i <= 4; i++) {
-
-            ligne = (int) tetro.getForme1().getPositions().get(i).get(0);
-            colonne = (int) tetro.getForme1().getPositions().get(i).get(1);
-
-            if (caseLibre(ligne, colonne)) {
-                mainBoard[ligne][colonne] = tetro.getForme1().getCouleur();
-            } else {
-                return false;
-            }
-
-        }
-
-        return true;
-    }
-*/
     //fonction qui declenche l'observer afin de mettre a jour l'UI
     public void actualiserUI() {
         Platform.runLater(new Runnable() {
