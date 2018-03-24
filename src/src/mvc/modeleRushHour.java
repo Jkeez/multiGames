@@ -69,14 +69,33 @@ public class modeleRushHour {
             return false;
         }
         public Boolean deplacementGauche(vueGenerique vueG){
+            vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante(), vueG);
             return false;
         }
         public Boolean deplacementBas(vueGenerique vueG){
+            vueG.getBibliotheque().verificationMouvementBas(vueG.getBibliotheque().getPieceCourrante(), vueG);
+            
             return false;
         }
         public Boolean deplacementHaut(vueGenerique vueG){
+            vueG.getBibliotheque().verificationMouvementHaut(vueG.getBibliotheque().getPieceCourrante(), vueG);
+            
             return false;
         }
+        
+         	// recherche la forme aux indices passees en parametre dans le tableau d'entiers
+	public Forme rechercheFormeClickee(int ligne, int colonne, modeleRushHour modRH) {
+		for (int i = 0; i < modRH.getListePieces().size(); i++) {
+			for (int j = 1; j <= modRH.getListePieces().get(i).getForme1().getPositions().size(); j++) {
+				if ((int) modRH.getListePieces().get(i).getForme1().getPositions().get(j).get(0) == ligne
+						&& (int) modRH.getListePieces().get(i).getForme1().getPositions().get(j).get(1) == colonne) {
+					return modRH.getListePieces().get(i);
+				}
+
+			}
+		}
+		return null;
+	}
     
     
     

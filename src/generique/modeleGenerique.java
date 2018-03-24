@@ -536,19 +536,7 @@ public class modeleGenerique extends Observable {
         actualiserUI();
     }
     
-    	// recherche la forme aux indices passees en parametre dans le tableau d'entiers
-	public Forme rechercheFormeClickee(int ligne, int colonne, modeleRushHour modRH) {
-		for (int i = 0; i < modRH.getListePieces().size(); i++) {
-			for (int j = 1; j <= modRH.getListePieces().get(i).getForme1().getPositions().size(); j++) {
-				if ((int) modRH.getListePieces().get(i).getForme1().getPositions().get(j).get(0) == ligne
-						&& (int) modRH.getListePieces().get(i).getForme1().getPositions().get(j).get(1) == colonne) {
-					return modRH.getListePieces().get(i);
-				}
-
-			}
-		}
-		return null;
-	}
+   
 
 }
 

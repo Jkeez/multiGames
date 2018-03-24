@@ -72,12 +72,7 @@ public class VueControleur extends Application {
 
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
-        Chrono chrono = new Chrono();
-        
-      
-        
-        
-        List<String> choices = new ArrayList<>();
+      List<String> choices = new ArrayList<>();
         
         choices.add("Tetris");
         choices.add("Rush Hour");
@@ -159,22 +154,74 @@ public class VueControleur extends Application {
             }*/
             if(result.get()=="Rush Hour"){
                 
-                
+                modeleRushHour modRH = new modeleRushHour();
+                modRH.initialiserPiecesRushHour(vueG);
+
                 vueG.getChrono().start(); // démarrage du chrono
                 int nbCoup;
                 
                 System.out.println("choix :"+result.get());
                 GridPane gpane=new GridPane();
-                vueG.lancerParametreDefaut(vueG, gpane, primaryStage);
+                
+                Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
+
+                vueG.lancerParametreDefaut(vueG, gpane, primaryStage,scene);
                 
 
+                primaryStage.setTitle("MultiGames");
+                primaryStage.setScene(scene);
+                
+                primaryStage.show();
+                gpane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+
+                        for( Node node: gpane.getChildren()) {
+
+                            if( node instanceof Rectangle) {
+                                if( node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
+                                    int ligne=GridPane.getRowIndex( node);
+                                    int colonne=GridPane.getColumnIndex( node);
+                                    
+                                    vueG.getBibliotheque().setPieceCourrante(modRH.rechercheFormeClickee(ligne, colonne, modRH));
+                                    
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                                //ajoute un evenement a capturer sur la scene, capture les saisies claviers
+                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if(vueG.getBibliotheque().getPieceCourrante()!=null){
+                            if(vueG.getBibliotheque().getPieceCourrante().getForme1().getOrientation()==1){
+                               if (event.getCode() == KeyCode.RIGHT) {
+                                   
+                                   
+                                modRH.deplacementDroite(vueG);
+                                   
+                                }
+                                if (event.getCode() == KeyCode.LEFT) {
+                                    modRH.deplacementGauche(vueG);
+                                } 
+                            }else{
+                                if (event.getCode() == KeyCode.UP) {
+                                    modRH.deplacementHaut(vueG);
+                                }
+                                if (event.getCode() == KeyCode.DOWN) {
+                                    modRH.deplacementBas(vueG);
+                                } 
+                            }
+                            
+                        }
+                    }
+                });
             }
             }
-     
     }
-
-
-    
 
     /**
      * @param args the command line arguments
