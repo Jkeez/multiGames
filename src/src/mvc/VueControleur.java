@@ -73,7 +73,6 @@ public class VueControleur extends Application {
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
         Chrono chrono = new Chrono();
-        modeleRushHour modRH = new modeleRushHour();
         
       
         
@@ -163,90 +162,10 @@ public class VueControleur extends Application {
                 
                 vueG.getChrono().start(); // démarrage du chrono
                 int nbCoup;
+                
                 System.out.println("choix :"+result.get());
-                Text temps = new Text("temps");
-
-                int column = 0;
-                int row = 0;
                 GridPane gpane=new GridPane();
-                
-                vueG.setRight(temps);
-
-                vueG.setgPane(gpane);
-                vueG.setCenter(vueG.getgPane());
-                
-                
-                ajouterObserver(vueG);
-                vueG.setPrefSize(600,400);
-                vueG.setStyle("-fx-border-color: black;");
-                vueG.getBibliotheque().autoRefresh(vueG);
-                modRH.initialiserPiecesRushHour(vueG);
-                vueG.initialiserGrille();
-                vueG.afficherGrille(gpane, vueG.getBibliotheque());
-                
-                gpane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-
-                        for( Node node: gpane.getChildren()) {
-
-                            if( node instanceof Rectangle) {
-                                if( node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
-                                    int ligne=GridPane.getRowIndex( node);
-                                    int colonne=GridPane.getColumnIndex( node);
-                                    
-                                    vueG.getBibliotheque().setPieceCourrante(vueG.getBibliotheque().rechercheFormeClickee(ligne, colonne, modRH));
-                                    
-                                }
-                            }
-                        }
-                    }
-                });
-                
-                 
-                
-                
-                Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
-
-
-                primaryStage.setTitle("MultiGames");
-                primaryStage.setScene(scene);
-                
-
-                primaryStage.show();
-                
-                //ajoute un evenement a capturer sur la scene, capture les saisies claviers
-                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-                    @Override
-                    public void handle(KeyEvent event) {
-                        if(vueG.getBibliotheque().getPieceCourrante()!=null){
-                            if(vueG.getBibliotheque().getPieceCourrante().getForme1().getOrientation()==1){
-                               if (event.getCode() == KeyCode.RIGHT) {
-                                   
-                                   
-                                modRH.deplacementDroite(vueG);
-                                   
-                                }
-                                if (event.getCode() == KeyCode.LEFT) {
-                                    vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante(),vueG);
-                                } 
-                            }else{
-                                if (event.getCode() == KeyCode.UP) {
-                                vueG.getBibliotheque().verificationMouvementHaut(vueG.getBibliotheque().getPieceCourrante(),vueG);
-                                }
-                                if (event.getCode() == KeyCode.DOWN) {
-                                    vueG.getBibliotheque().verificationMouvementBas(vueG.getBibliotheque().getPieceCourrante(),vueG);
-                                } 
-                            }
-                            
-                        }else{
-                            System.out.println("Debug:Aucune piece choisie.");
-                        }
-                        
-                    }
-                });
-
+                vueG.lancerParametreDefaut(vueG, gpane, primaryStage);
                 
 
             }
