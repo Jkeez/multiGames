@@ -32,15 +32,39 @@ public class modeleRushHour {
     
         // construit le plateau du rush hour
     	public void initialiserPiecesRushHour(vueGenerique vueG) {
-		Forme camion = new Forme();
-		camion.objetCamion(0, 0, 0);// camion sur (0;0), vertical
-		this.getListePieces().add(camion);
-		camion = new Forme();
-		camion.objetCamion(0, 2, 1);// camion sur (0;0), horizontal
-		this.getListePieces().add(camion);
-		camion = new Forme();
-		camion.objetVoitureJoueur(5, 2);// voiture du joueur sur (5;0), horizontal
-		this.getListePieces().add(camion);
+		Forme pieceRH = new Forme();
+		pieceRH.objetCamion(0, 0, 0);// camion sur (0;0), vertical
+		this.getListePieces().add(pieceRH);
+		pieceRH = new Forme();
+		pieceRH.objetCamion(0, 2, 1);
+		this.getListePieces().add(pieceRH);
+		
+                pieceRH = new Forme();
+		pieceRH.objetVoiture(7, 5,0);
+		this.getListePieces().add(pieceRH);
+                pieceRH = new Forme();
+		pieceRH.objetVoiture(5, 7,0);
+		this.getListePieces().add(pieceRH);
+                pieceRH = new Forme();
+		pieceRH.objetCamion(4, 10,0);
+		this.getListePieces().add(pieceRH);
+                pieceRH = new Forme();
+		pieceRH.objetCamion(4, 4,1);
+		this.getListePieces().add(pieceRH);
+                pieceRH = new Forme();
+		pieceRH.objetCamion(2, 2,1);
+		this.getListePieces().add(pieceRH);
+                pieceRH = new Forme();
+		pieceRH.objetVoiture(10, 7,1);
+		this.getListePieces().add(pieceRH);
+                pieceRH = new Forme();
+		pieceRH.objetVoiture(9, 1,1);
+		this.getListePieces().add(pieceRH);
+                
+                pieceRH = new Forme();
+                pieceRH.getForme1().setCouleur(8);
+		pieceRH.objetVoitureJoueur(5, 2);// voiture du joueur sur (5;0), horizontal
+		this.getListePieces().add(pieceRH);
 
 		// initialise le tableau d'entiers
 		for (int i = 0; i < this.getListePieces().size(); i++) {

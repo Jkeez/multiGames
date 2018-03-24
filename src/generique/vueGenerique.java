@@ -203,6 +203,9 @@ public class vueGenerique extends BorderPane {
 					case 7:
 						r.setFill(Color.GREEN);
 						break;
+                                        case 8:
+                                            r.setFill(Color.BLACK);
+						break;
 					}
 
 				}
