@@ -64,7 +64,7 @@ import src.mvc.modeleRushHour;
 public class VueControleur extends Application {
 
     vueGenerique vueG = new vueGenerique();
-    tableauJeu tj = new tableauJeu();
+    //tableauJeu tj = new tableauJeu();
     
 
     int[][] mainBoard = vueG.getBibliotheque().getMainBoard();//recupere le tableau d'entier qui indique la position des pieces
@@ -72,87 +72,6 @@ public class VueControleur extends Application {
 
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
-      List<String> choices = new ArrayList<>();
-        
-        choices.add("Tetris");
-        choices.add("Rush Hour");
-        
-        ChoiceDialog<String> dialog = new ChoiceDialog<>("--Liste de Jeux--", choices);
-        dialog.setTitle("Choisir un jeu");
-        dialog.setContentText("Jeu :");
-        
-        Optional<String> result = dialog.showAndWait();
-        
-        if(result.isPresent()){
-           /* if(result.get()=="Tetris"){
-                chrono.start(); // démarrage du chrono
-        
-                System.out.println("choix :"+result.get());
-
-
-                int column = 0;
-                int row = 0;
-                GridPane gpane=new GridPane();
-
-
-                vueG.setgPane(gpane);
-                vueG.setCenter(vueG.getgPane());
-                vueG.getgPane().setGridLinesVisible(false);
-
-
-                ajouterObserver(vueG);
-                vueG.setPrefSize(600,400);
-                vueG.setStyle("-fx-border-color: black;");
-                Parent border = null;
-
-                vueG.initialiserGrille();
-                Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
-
-
-                primaryStage.setTitle("MultiGames");
-                primaryStage.setScene(scene);
-
-                primaryStage.show();
-
-
-                Forme tetroCourrant = new Forme();
-                tetroCourrant.setShape();
-                vueG.getBibliotheque().setPieceCourrante(tetroCourrant);
-
-
-
-                //ajoute un evenement a capturer sur la scene, capture les saisies claviers
-                scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-                    @Override
-                    public void handle(KeyEvent event) {
-                        if (event.getCode() == KeyCode.RIGHT) {
-                            vueG.getBibliotheque().verificationMouvementDroit(vueG.getBibliotheque().getPieceCourrante(), vueG);
-                        }
-                        if (event.getCode() == KeyCode.LEFT) {
-                            vueG.getBibliotheque().verificationMouvementGauche(vueG.getBibliotheque().getPieceCourrante(),vueG);
-                        }
-                    }
-                });
-
-
-
-                if (vueG.getBibliotheque().ajouterPiece(vueG.getBibliotheque().getPieceCourrante()) == true) {
-                    vueG.afficherGrille(vueG.getgPane(), vueG.getBibliotheque());
-
-                    tj.mouvementBasAuto(vueG.getBibliotheque().getPieceCourrante(),vueG);//fait tomber la piece
-
-                } else {
-                    System.out.println("Fin de partie");
-                }
-                //Forme tetro = new Forme();
-                //m.testGrille();
-                //tetro=tj.popTetrominoes( mainBoard);//ajoute tetrominos au jeu + recupere forme
-
-                //ajouterTetrominosJeu(tetro, gPane);
-                //faireTomberPiece(tetro, gPane);
-            }*/
-            if(result.get()=="Rush Hour"){
                 
                 modeleRushHour modRH = new modeleRushHour();
                 modRH.initialiserPiecesRushHour(vueG);
@@ -160,7 +79,6 @@ public class VueControleur extends Application {
                 vueG.getChrono().start(); // démarrage du chrono
                 int nbCoup;
                 
-                System.out.println("choix :"+result.get());
                 GridPane gpane=new GridPane();
                 
                 Scene scene = new Scene(vueG,600,400, Color.LIGHTBLUE);
@@ -220,9 +138,7 @@ public class VueControleur extends Application {
                     }
                 });
             }
-            }
-    }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -230,5 +146,8 @@ public class VueControleur extends Application {
     	   
         launch(args);
     }
+            }
+    
 
-}
+
+
