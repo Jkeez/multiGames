@@ -123,6 +123,7 @@ public class modeleGenerique extends Observable {
     }
     
     public void autoRefresh(vueGenerique vueG){
+        
         Timer time = new Timer();
         time.schedule(
                 new TimerTask() {

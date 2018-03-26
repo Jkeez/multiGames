@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigame%20V2/multiGames/src/src/mvc/VueControleur.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/generique/vueGenerique.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/src/mvc/tableauJeu.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/generique/FormeGenerique.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/generique/Chrono.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/src/mvc/VueControleur.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/src/mvc/modeleRushHour.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/src/mvc/Forme.java</file>
+            <file>file:/D:/Cours/Polytech/Semestre%206/APO/Projet/multigames/multiGames/src/generique/modeleGenerique.java</file>
         </group>
     </open-files>
 </project-private>
